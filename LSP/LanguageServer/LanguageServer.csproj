@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="NumberOrObject.cs" />
+    <Compile Remove="NumberOrString.cs" />
+    <Compile Remove="Serializer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="ProtocolReader" Version="1.0.3" />
+  </ItemGroup>
+
+</Project>
