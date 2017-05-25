@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageServer.Client;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -7,7 +8,7 @@ namespace LanguageServer
 {
     public class JsonRpcService
     {
-        public Connection Connection { get; set; }
+        public virtual Connection Connection { get; set; }
 
         public CancellationToken CancellationToken { get; set; }
     }

@@ -204,10 +204,12 @@ namespace LanguageServer
         {
             var rpcType = typeof(JsonRpcService).GetTypeInfo();
             var methodCallType = typeof(MethodCall).GetTypeInfo();
-            var serviceTypes = targetAssembly.DefinedTypes.Where(x => rpcType.IsAssignableFrom(x));
+            var serviceTypes = targetAssembly.DefinedTypes
+                .Where(x => rpcType.IsAssignableFrom(x))
+                .Select(x => x.AsType());
             foreach (var serviceType in serviceTypes)
             {
-                var rpcMethods = serviceType.DeclaredMethods
+                var rpcMethods = serviceType.GetRuntimeMethods()
                     .Select(x => new
                     {
                         MethodInfo = x,
@@ -222,19 +224,18 @@ namespace LanguageServer
                 {
                     if (method.ReturnType == typeof(void))
                     {
-                        AddNotificationHandler(method.RpcMethodName, CreateNotificationHandler(method.MethodInfo));
+                        AddNotificationHandler(method.RpcMethodName, CreateNotificationHandler(serviceType, method.MethodInfo));
                     }
                     else
                     {
-                        AddRequestHandler(method.RpcMethodName, CreateRequestHandler(method.MethodInfo));
+                        AddRequestHandler(method.RpcMethodName, CreateRequestHandler(serviceType, method.MethodInfo));
                     }
                 }
             }
         }
 
-        private RequestHandler CreateRequestHandler(MethodInfo methodInfo)
+        private RequestHandler CreateRequestHandler(Type serviceType, MethodInfo methodInfo)
         {
-            var serviceType = methodInfo.DeclaringType;
             var requestType = methodInfo.GetParameters()[0].ParameterType;
             var responseType = methodInfo.ReturnType;
             var factory = openFuncFactory.MakeGenericMethod(serviceType, requestType, responseType);
@@ -242,9 +243,8 @@ namespace LanguageServer
             return new RequestHandler(requestType, responseType, handler);
         }
 
-        private NotificationHandler CreateNotificationHandler(MethodInfo methodInfo)
+        private NotificationHandler CreateNotificationHandler(Type serviceType, MethodInfo methodInfo)
         {
-            var serviceType = methodInfo.DeclaringType;
             var requestType = methodInfo.GetParameters()[0].ParameterType;
             var factory = openActionFactory.MakeGenericMethod(serviceType, requestType);
             var handler = (Action<object>)factory.Invoke(null, new object[] { this, methodInfo });
