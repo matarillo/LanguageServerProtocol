@@ -8,7 +8,7 @@ namespace LanguageServer.Server
 {
     public class GeneralServiceTemplate : JsonRpcService
     {
-        private ClientProxy _client;
+        private Proxy _proxy;
 
         public override Connection Connection
         {
@@ -16,11 +16,11 @@ namespace LanguageServer.Server
             set
             {
                 base.Connection = value;
-                _client = new ClientProxy(value);
+                _proxy = new Proxy(value);
             }
         }
 
-        public ClientProxy Client { get => _client; }
+        public Proxy Proxy { get => _proxy; }
 
         [JsonRpcMethod("initialize")]
         public ResponseMessage<InitializeResult, InitializeError> Initialize(RequestMessage<InitializeParams> request)
@@ -49,7 +49,7 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("initialized")]
-        public void Initialized(NotificationMessage<_Void> request)
+        public void Initialized(NotificationMessage<_Void> notification)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("exit")]
-        public void Exit(NotificationMessage<_Void> request)
+        public void Exit(NotificationMessage<_Void> notification)
         {
             try
             {

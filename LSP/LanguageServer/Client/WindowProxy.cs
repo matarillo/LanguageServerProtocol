@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace LanguageServer.Client
 {
-    public sealed class Window
+    public sealed class WindowProxy
     {
         private readonly Connection _connection;
 
-        internal Window(Connection connection)
+        internal WindowProxy(Connection connection)
         {
             _connection = connection;
         }
