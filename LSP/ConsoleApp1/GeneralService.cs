@@ -1,5 +1,6 @@
 ﻿using LanguageServer;
 using LanguageServer.Parameters;
+using LanguageServer.Parameters.General;
 using LanguageServer.Server;
 using System;
 
@@ -14,7 +15,8 @@ namespace ConsoleApp1
             {
                 capabilities = new ServerCapabilities
                 {
-                    definitionProvider = true
+                    definitionProvider = true,
+                    textDocumentSync = TextDocumentSyncKind.Full
                 }
             };
         }

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace LanguageServer.Parameters
 {
+    // textDocument/documentSymbol & workspace/symbol
     public class SymbolInformation
     {
         public string name { get; set; }

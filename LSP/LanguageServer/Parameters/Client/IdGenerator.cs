@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LanguageServer.Parameters
+namespace LanguageServer.Client
 {
     public class IdGenerator
     {

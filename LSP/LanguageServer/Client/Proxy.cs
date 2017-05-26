@@ -10,6 +10,7 @@ namespace LanguageServer.Client
         private WindowProxy _window;
         private ClientProxy _client;
         private WorkspaceProxy _workspace;
+        private TextDocumentProxy _textDocument;
 
         public Proxy(Connection connection)
         {
@@ -43,5 +44,13 @@ namespace LanguageServer.Client
             }
         }
 
+        public TextDocumentProxy TextDocument
+        {
+            get
+            {
+                _textDocument = _textDocument ?? new TextDocumentProxy(_connection);
+                return _textDocument;
+            }
+        }
     }
 }

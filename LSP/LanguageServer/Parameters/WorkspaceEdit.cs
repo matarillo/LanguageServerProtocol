@@ -4,6 +4,7 @@ using System.Text;
 
 namespace LanguageServer.Parameters
 {
+    // textDocument/rename & workspace/applyEdit
     public class WorkspaceEdit
     {
         public Dictionary<Uri, TextEdit[]> changes { get; set; }

@@ -1,6 +1,7 @@
 ﻿using LanguageServer;
 using LanguageServer.Json;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,17 +25,17 @@ namespace ConsoleApp1
 
             Console.WriteLine("---1");
             msOut.SetLength(0L);
-            var r1 = new RequestMessage<LanguageServer.Parameters.InitializeParams>
+            var r1 = new RequestMessage<LanguageServer.Parameters.General.InitializeParams>
             {
                 id = 123,
                 method = "initialize",
-                @params = new LanguageServer.Parameters.InitializeParams
+                @params = new LanguageServer.Parameters.General.InitializeParams
                 {
-                    capabilities = new LanguageServer.Parameters.ClientCapabilities
+                    capabilities = new LanguageServer.Parameters.General.ClientCapabilities
                     {
-                        textDocument = new LanguageServer.Parameters.TextDocumentClientCapabilities
+                        textDocument = new LanguageServer.Parameters.General.TextDocumentClientCapabilities
                         {
-                            formatting = new LanguageServer.Parameters.RegistrationCapabilities
+                            formatting = new LanguageServer.Parameters.General.RegistrationCapabilities
                             {
                                 dynamicRegistration = true
                             }
@@ -42,7 +43,7 @@ namespace ConsoleApp1
                     }
                 }
             };
-            conn.SendRequest<LanguageServer.Parameters.InitializeParams, LanguageServer.Parameters.InitializeResult, LanguageServer.Parameters.InitializeError>(r1, x => { });
+            conn.SendRequest<LanguageServer.Parameters.General.InitializeParams, LanguageServer.Parameters.General.InitializeResult, LanguageServer.Parameters.General.InitializeError>(r1, x => { });
             msOut.Position = 0L;
             var in1 = msOut.ToArray();
             msIn.SetLength(0L);

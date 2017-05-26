@@ -1,5 +1,5 @@
-﻿using LanguageServer.Parameters;
-using LanguageServer.Json;
+﻿using LanguageServer.Json;
+using LanguageServer.Parameters.General;
 using Matarillo.IO;
 using System;
 using System.Collections.Generic;

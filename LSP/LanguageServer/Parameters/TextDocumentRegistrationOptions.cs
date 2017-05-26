@@ -8,13 +8,4 @@ namespace LanguageServer.Parameters
     {
         public DocumentFilter[] documentSelector { get; set; }
     }
-
-    public class DocumentFilter
-    {
-        public string language { get; set; }
-
-        public string scheme { get; set; }
-
-        public string pattern { get; set; }
-    }
 }

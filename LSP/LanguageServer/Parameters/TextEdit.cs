@@ -6,5 +6,8 @@ namespace LanguageServer.Parameters
 {
     public class TextEdit
     {
+        public Range range { get; set; }
+
+        public string newText { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using LanguageServer.Client;
 using LanguageServer.Parameters;
+using LanguageServer.Parameters.General;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LanguageServer.Server
 {

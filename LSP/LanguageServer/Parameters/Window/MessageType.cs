@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LanguageServer.Parameters
+namespace LanguageServer.Parameters.Window
 {
     public enum MessageType
     {

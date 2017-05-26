@@ -1,4 +1,4 @@
-﻿namespace LanguageServer.Parameters
+﻿namespace LanguageServer.Parameters.General
 {
     public class ClientCapabilities
     {

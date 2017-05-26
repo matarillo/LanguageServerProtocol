@@ -1,6 +1,6 @@
 ﻿using LanguageServer.Json;
 
-namespace LanguageServer.Parameters
+namespace LanguageServer.Parameters.General
 {
     public class CancelParams
     {
