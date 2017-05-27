@@ -6,11 +6,15 @@ namespace LanguageServer.Infrastructure.JsonDotNet
 {
     public class JsonDotNetSerializer : Serializer
     {
-        private readonly NumberOrStringConverter _numberOfStringConverter = new NumberOrStringConverter();
         private readonly JsonSerializerSettings _settings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
-            Converters = new JsonConverter[] { new NumberOrStringConverter(), new NumberOrObjectConverter() }
+            Converters = new JsonConverter[]
+            {
+                new NumberOrStringConverter(),
+                new NumberOrObjectConverter(),
+                new ArrayOrObjectConverter()
+            }
         };
 
         public override object Deserialize(Type objectType, string json)

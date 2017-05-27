@@ -1,4 +1,6 @@
 ﻿using LanguageServer.Client;
+using LanguageServer.Json;
+using LanguageServer.Parameters;
 using LanguageServer.Parameters.TextDocument;
 using System;
 using System.Collections.Generic;
@@ -58,11 +60,115 @@ namespace LanguageServer.Server
         {
         }
 
-        // textDocument/willSave
-        // textDocument/willSaveWaitUntil
-        // textDocument/didSave
-        // textDocument/didClose
-        // textDocument/completion
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/willSave")]
+        public void WillSaveTextDocument(NotificationMessage<WillSaveTextDocumentParams> notification)
+        {
+            try
+            {
+                this.WillSaveTextDocument(notification.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
+        }
+
+        protected virtual void WillSaveTextDocument(WillSaveTextDocumentParams @params)
+        {
+        }
+
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/willSaveWaitUntil")]
+        public ResponseMessage<TextEdit[], _Void> WillSaveWaitUntilTextDocument(RequestMessage<WillSaveTextDocumentParams> request)
+        {
+            Result<TextEdit[], Error<_Void>> r;
+            try
+            {
+                r = WillSaveWaitUntilTextDocument(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<TextEdit[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<TextEdit[], Error<_Void>> WillSaveWaitUntilTextDocument(WillSaveTextDocumentParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Registration Options: TextDocumentSaveRegistrationOptions
+        [JsonRpcMethod("textDocument/didSave")]
+        public void DidSaveTextDocument(NotificationMessage<DidSaveTextDocumentParams> notification)
+        {
+            try
+            {
+                this.DidSaveTextDocument(notification.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
+        }
+
+        protected virtual void DidSaveTextDocument(DidSaveTextDocumentParams @params)
+        {
+        }
+
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/didClose")]
+        public void DidCloseTextDocument(NotificationMessage<DidCloseTextDocumentParams> notification)
+        {
+            try
+            {
+                this.DidCloseTextDocument(notification.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+            }
+        }
+
+        protected virtual void DidCloseTextDocument(DidCloseTextDocumentParams @params)
+        {
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: CompletionRegistrationOptions
+        [JsonRpcMethod("textDocument/completion")]
+        public ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>, _Void> Completion(RequestMessage<TextDocumentPositionParams> request)
+        {
+            Result<ArrayOrObject<CompletionItem, CompletionList>, Error<_Void>> r;
+            try
+            {
+                r = Completion(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>, _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<ArrayOrObject<CompletionItem, CompletionList>, Error<_Void>> Completion(TextDocumentPositionParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
         // completionItem/resolve
         // textDocument/hover
         // textDocument/signatureHelp
