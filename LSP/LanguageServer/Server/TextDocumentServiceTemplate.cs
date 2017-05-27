@@ -169,7 +169,32 @@ namespace LanguageServer.Server
             throw new NotImplementedException();
         }
 
-        // completionItem/resolve
+        [JsonRpcMethod("completionItem/resolve")]
+        public ResponseMessage<CompletionItem, _Void> ResolveCompletionItem(RequestMessage<CompletionItem> request)
+        {
+            Result<CompletionItem, Error<_Void>> r;
+            try
+            {
+                r = ResolveCompletionItem(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<CompletionItem, _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<CompletionItem, Error<_Void>> ResolveCompletionItem(CompletionItem @params)
+        {
+            throw new NotImplementedException();
+        }
+
         // textDocument/hover
         // textDocument/signatureHelp
         // textDocument/references
@@ -180,10 +205,141 @@ namespace LanguageServer.Server
         // textDocument/onTypeFormatting
         // textDocument/definition
         // textDocument/codeAction
-        // textDocument/codeLens
-        // codeLens/resolve
-        // textDocument/documentLink
-        // documentLink/resolve
-        // textDocument/rename
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: CodeLensRegistrationOptions
+        [JsonRpcMethod("textDocument/codeLens")]
+        public ResponseMessage<CodeLens[], _Void> CodeLens(RequestMessage<CodeLensParams> request)
+        {
+            Result<CodeLens[], Error<_Void>> r;
+            try
+            {
+                r = CodeLens(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<CodeLens[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<CodeLens[], Error<_Void>> CodeLens(CodeLensParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        [JsonRpcMethod("codeLens/resolve")]
+        public ResponseMessage<CodeLens, _Void> ResolveCodeLens(RequestMessage<CodeLens> request)
+        {
+            Result<CodeLens, Error<_Void>> r;
+            try
+            {
+                r = ResolveCodeLens(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<CodeLens, _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<CodeLens, Error<_Void>> ResolveCodeLens(CodeLens @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynam0icRegistration?: boolean;
+        // Registration Options: DocumentLinkRegistrationOptions
+        [JsonRpcMethod("textDocument/documentLink")]
+        public ResponseMessage<DocumentLink[], _Void> DocumentLink(RequestMessage<DocumentLinkParams> request)
+        {
+            Result<DocumentLink[], Error<_Void>> r;
+            try
+            {
+                r = DocumentLink(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<DocumentLink[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<DocumentLink[], Error<_Void>> DocumentLink(DocumentLinkParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        [JsonRpcMethod("documentLink/resolve")]
+        public ResponseMessage<DocumentLink, _Void> ResolveDocumentLink(RequestMessage<DocumentLink> request)
+        {
+            Result<DocumentLink, Error<_Void>> r;
+            try
+            {
+                r = ResolveDocumentLink(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<DocumentLink, _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<DocumentLink, Error<_Void>> ResolveDocumentLink(DocumentLink @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/rename")]
+        public ResponseMessage<WorkspaceEdit, _Void> Rename(RequestMessage<RenameParams> request)
+        {
+            Result<WorkspaceEdit, Error<_Void>> r;
+            try
+            {
+                r = Rename(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<WorkspaceEdit, _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<WorkspaceEdit, Error<_Void>> Rename(RenameParams @params)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
