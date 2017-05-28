@@ -46,27 +46,75 @@ namespace LanguageServer
         public string method { get; set; }
     }
 
-    public abstract class ResponseMessage : Message
+    public abstract class ResponseMessageBase : Message
     {
         public NumberOrString id { get; set; }
     }
 
-    public class RequestMessage<T> : MethodCall
+    public class RequestMessage : MethodCall
+    {
+        public NumberOrString id { get; set; }
+    }
+
+    public class RequestMessage<T> : RequestMessage
     {
         public T @params { get; set; }
-
-        public NumberOrString id { get; set; }
     }
 
-    public class ResponseMessage<T, TErrorData> : ResponseMessage
+    public class ResponseMessage<T, TErrorData> : ResponseMessageBase
     {
         public T result { get; set; }
 
         public Error<TErrorData> error { get; set; }
     }
 
-    public class NotificationMessage<T> : MethodCall
+    public class _ResponseMessage : ResponseMessageBase
+    {
+        public ResponseError error { get; set; }
+    }
+
+    public class _ResponseMessage<T> : ResponseMessageBase
+    {
+        public T result { get; set; }
+
+        public ResponseError error { get; set; }
+    }
+
+    public class _ResponseMessage<T, TError> : ResponseMessageBase
+        where TError : ResponseError
+    {
+        public T result { get; set; }
+
+        public TError error { get; set; }
+    }
+
+    public class NotificationMessage : MethodCall
+    {
+    }
+
+    public class NotificationMessage<T> : NotificationMessage
     {
         public T @params { get; set; }
+    }
+
+    public class ResponseError
+    {
+        public ErrorCodes code { get; set; }
+
+        public string message { get; set; }
+    }
+
+    public enum ErrorCodes
+    {
+        ParseError = -32700,
+        InvalidRequest = -32600,
+        MethodNotFound = -32601,
+        InvalidParams = -32602,
+        InternalError = -32603,
+        ServerErrorStart = -32099,
+        ServerErrorEnd = -32000,
+        ServerNotInitialized = -32002,
+        UnknownErrorCode = -32001,
+        RequestCancelled = -32800,
     }
 }

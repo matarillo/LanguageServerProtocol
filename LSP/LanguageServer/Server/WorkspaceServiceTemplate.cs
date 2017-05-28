@@ -62,9 +62,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: void
         [JsonRpcMethod("workspace/symbol")]
-        public ResponseMessage<SymbolInformation[], _Void> Symbol(RequestMessage<WorkspaceSymbolParams> request)
+        public _ResponseMessage<SymbolInformation[]> Symbol(RequestMessage<WorkspaceSymbolParams> request)
         {
-            Result<SymbolInformation[], Error<_Void>> r;
+            Result<SymbolInformation[], ResponseError> r;
             try
             {
                 r = Symbol(request.@params);
@@ -72,9 +72,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error._InternalError<ResponseError>();
             }
-            return new ResponseMessage<SymbolInformation[], _Void>
+            return new _ResponseMessage<SymbolInformation[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -82,7 +82,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<SymbolInformation[], Error<_Void>> Symbol(WorkspaceSymbolParams @params)
+        protected virtual Result<SymbolInformation[], ResponseError> Symbol(WorkspaceSymbolParams @params)
         {
             throw new NotImplementedException();
         }
@@ -90,9 +90,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: ExecuteCommandRegistrationOptions
         [JsonRpcMethod("workspace/executeCommand")]
-        public ResponseMessage<dynamic, _Void> ExecuteCommand(RequestMessage<ExecuteCommandParams> request)
+        public _ResponseMessage<dynamic> ExecuteCommand(RequestMessage<ExecuteCommandParams> request)
         {
-            Result<dynamic, Error<_Void>> r;
+            Result<dynamic, ResponseError> r;
             try
             {
                 r = ExecuteCommand(request.@params);
@@ -102,7 +102,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Error.InternalError<_Void>();
             }
-            return new ResponseMessage<dynamic, _Void>
+            return new _ResponseMessage<dynamic>
             {
                 id = request.id,
                 result = r.Success,
@@ -110,7 +110,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<dynamic, Error<_Void>> ExecuteCommand(ExecuteCommandParams @params)
+        protected virtual Result<dynamic, ResponseError> ExecuteCommand(ExecuteCommandParams @params)
         {
             throw new NotImplementedException();
         }

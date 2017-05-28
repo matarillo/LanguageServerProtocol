@@ -8,6 +8,7 @@ using System.Text;
 
 namespace LanguageServer.Server
 {
+    // TODO: refactor
     public class TextDocumentServiceTemplate : JsonRpcService
     {
         private Proxy _proxy;

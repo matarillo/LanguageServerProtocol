@@ -72,7 +72,7 @@ namespace LanguageServer
                 var tokenSource = new CancellationTokenSource();
                 cancellations.Set(id, tokenSource);
                 var request = Serializer.Instance.Deserialize(handler.RequestType, json);
-                var requestResponse = (ResponseMessage)handler.Handle(request, tokenSource.Token);
+                var requestResponse = (ResponseMessageBase)handler.Handle(request, tokenSource.Token);
                 cancellations.Remove(id);
                 requestResponse.id = id;
                 SendMessage(requestResponse);
@@ -257,7 +257,7 @@ namespace LanguageServer
         private static Func<object, CancellationToken, object> CreateFunc<TService, TRequest, TResponse>(Connection connection, MethodInfo mi)
             where TService : JsonRpcService, new()
             where TRequest : MethodCall
-            where TResponse : ResponseMessage
+            where TResponse : ResponseMessageBase
         {
             var deleType = typeof(Func<TService, TRequest, TResponse>);
             var func = (Func<TService, TRequest, TResponse>)mi.CreateDelegate(deleType);

@@ -22,9 +22,9 @@ namespace LanguageServer.Server
         public Proxy Proxy { get => _proxy; }
 
         [JsonRpcMethod("initialize")]
-        public ResponseMessage<InitializeResult, InitializeError> Initialize(RequestMessage<InitializeParams> request)
+        public _ResponseMessage<InitializeResult, InitializeError> Initialize(RequestMessage<InitializeParams> request)
         {
-            Result<InitializeResult, Error<InitializeError>> r;
+            Result<InitializeResult, InitializeError> r;
             try
             {
                 r = Initialize(request.@params);
@@ -32,9 +32,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<InitializeError>();
+                r = Error._InternalError<InitializeError>();
             }
-            return new ResponseMessage<InitializeResult, InitializeError>
+            return new _ResponseMessage<InitializeResult, InitializeError>
             {
                 id = request.id,
                 result = r.Success,
@@ -42,13 +42,13 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<InitializeResult, Error<InitializeError>> Initialize(InitializeParams @params)
+        protected virtual Result<InitializeResult, InitializeError> Initialize(InitializeParams @params)
         {
             throw new NotImplementedException();
         }
 
         [JsonRpcMethod("initialized")]
-        public void Initialized(NotificationMessage<_Void> notification)
+        public void Initialized(NotificationMessage notification)
         {
             try
             {
@@ -65,9 +65,9 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("shutdown")]
-        public ResponseMessage<_Void, _Void> Shutdown(RequestMessage<_Void> request)
+        public _ResponseMessage Shutdown(RequestMessage request)
         {
-            Result<_Void, Error<_Void>> r;
+            Result<_Void, ResponseError> r;
             try
             {
                 r = Shutdown();
@@ -75,23 +75,22 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error._InternalError<ResponseError>();
             }
-            return new ResponseMessage<_Void, _Void>
+            return new _ResponseMessage
             {
                 id = request.id,
-                result = r.Success,
                 error = r.Error
             };
         }
 
-        protected virtual Result<_Void, Error<_Void>> Shutdown()
+        protected virtual Result<_Void, ResponseError> Shutdown()
         {
             throw new NotImplementedException();
         }
 
         [JsonRpcMethod("exit")]
-        public void Exit(NotificationMessage<_Void> notification)
+        public void Exit(NotificationMessage notification)
         {
             try
             {

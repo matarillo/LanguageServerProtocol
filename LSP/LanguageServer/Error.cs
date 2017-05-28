@@ -12,6 +12,7 @@ namespace LanguageServer
         public static Error<T> InvalidRequest<T>(T data = null) where T : class => new Error<T> { code = -32600L, message = "Invalid Request", data = data };
         public static Error<T> MethodNotFound<T>(T data = null) where T : class => new Error<T> { code = -32601L, message = "Method not found", data = data };
         public static Error<T> InvalidParams<T>(T data = null) where T : class => new Error<T> { code = -32602L, message = "Invalid params", data = data };
+        public static TError _InternalError<TError>() where TError : ResponseError, new() => new TError { code = ErrorCodes.InternalError, message = "Internal error" };
         public static Error<T> InternalError<T>(T data = null) where T : class => new Error<T> { code = -32603L, message = "Internal error", data = data };
         public static Error<T> ServerError<T>(long code, T data = null) where T : class =>
             (-32000L >= code && code >= -32099L)
