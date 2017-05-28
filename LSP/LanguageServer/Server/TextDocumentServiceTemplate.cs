@@ -223,15 +223,257 @@ namespace LanguageServer.Server
             throw new NotImplementedException();
         }
 
-        // textDocument/signatureHelp
-        // textDocument/references
-        // textDocument/documentHighlight
-        // textDocument/documentSymbol
-        // textDocument/formatting
-        // textDocument/rangeFormatting
-        // textDocument/onTypeFormatting
-        // textDocument/definition
-        // textDocument/codeAction
+        // dynamicRegistration?: boolean;
+        // Registration Options: SignatureHelpRegistrationOptions
+        [JsonRpcMethod("textDocument/signatureHelp")]
+        public ResponseMessage<SignatureHelp, _Void> SignatureHelp(RequestMessage<TextDocumentPositionParams> request)
+        {
+            Result<SignatureHelp, Error<_Void>> r;
+            try
+            {
+                r = SignatureHelp(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<SignatureHelp, _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<SignatureHelp, Error<_Void>> SignatureHelp(TextDocumentPositionParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/references")]
+        public ResponseMessage<Location[], _Void> FindReferences(RequestMessage<ReferenceParams> request)
+        {
+            Result<Location[], Error<_Void>> r;
+            try
+            {
+                r = FindReferences(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<Location[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<Location[], Error<_Void>> FindReferences(ReferenceParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/documentHighlight")]
+        public ResponseMessage<DocumentHighlight[], _Void> DocumentHighlight(RequestMessage<TextDocumentPositionParams> request)
+        {
+            Result<DocumentHighlight[], Error<_Void>> r;
+            try
+            {
+                r = DocumentHighlight(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<DocumentHighlight[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<DocumentHighlight[], Error<_Void>> DocumentHighlight(TextDocumentPositionParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/documentSymbol")]
+        public ResponseMessage<SymbolInformation[], _Void> DocumentSymbols(RequestMessage<DocumentSymbolParams> request)
+        {
+            Result<SymbolInformation[], Error<_Void>> r;
+            try
+            {
+                r = DocumentSymbols(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<SymbolInformation[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<SymbolInformation[], Error<_Void>> DocumentSymbols(DocumentSymbolParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/formatting")]
+        public ResponseMessage<TextEdit[], _Void> DocumentFormatting(RequestMessage<DocumentFormattingParams> request)
+        {
+            Result<TextEdit[], Error<_Void>> r;
+            try
+            {
+                r = DocumentFormatting(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<TextEdit[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<TextEdit[], Error<_Void>> DocumentFormatting(DocumentFormattingParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/rangeFormatting")]
+        public ResponseMessage<TextEdit[], _Void> DocumentRangeFormatting(RequestMessage<DocumentRangeFormattingParams> request)
+        {
+            Result<TextEdit[], Error<_Void>> r;
+            try
+            {
+                r = DocumentRangeFormatting(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<TextEdit[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<TextEdit[], Error<_Void>> DocumentRangeFormatting(DocumentRangeFormattingParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: DocumentOnTypeFormattingRegistrationOptions
+        [JsonRpcMethod("textDocument/onTypeFormatting")]
+        public ResponseMessage<TextEdit[], _Void> DocumentOnTypeFormatting(RequestMessage<DocumentOnTypeFormattingParams> request)
+        {
+            Result<TextEdit[], Error<_Void>> r;
+            try
+            {
+                r = DocumentOnTypeFormatting(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<TextEdit[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<TextEdit[], Error<_Void>> DocumentOnTypeFormatting(DocumentOnTypeFormattingParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/definition")]
+        public ResponseMessage<ArrayOrObject<Location, Location>, _Void> GotoDefinition(RequestMessage<TextDocumentPositionParams> request)
+        {
+            Result<ArrayOrObject<Location, Location>, Error<_Void>> r;
+            try
+            {
+                r = GotoDefinition(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<ArrayOrObject<Location, Location>, _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<ArrayOrObject<Location, Location>, Error<_Void>> GotoDefinition(TextDocumentPositionParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/codeAction")]
+        public ResponseMessage<Command[], _Void> CodeAction(RequestMessage<CodeActionParams> request)
+        {
+            Result<Command[], Error<_Void>> r;
+            try
+            {
+                r = CodeAction(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<Command[], _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<Command[], Error<_Void>> CodeAction(CodeActionParams @params)
+        {
+            throw new NotImplementedException();
+        }
 
         // dynamicRegistration?: boolean;
         // Registration Options: CodeLensRegistrationOptions
