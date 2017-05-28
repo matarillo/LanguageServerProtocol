@@ -195,7 +195,34 @@ namespace LanguageServer.Server
             throw new NotImplementedException();
         }
 
-        // textDocument/hover
+        // dynamicRegistration?: boolean;
+        // Registration Options: TextDocumentRegistrationOptions
+        [JsonRpcMethod("textDocument/hover")]
+        public ResponseMessage<Hover, _Void> Hover(RequestMessage<TextDocumentPositionParams> request)
+        {
+            Result<Hover, Error<_Void>> r;
+            try
+            {
+                r = Hover(request.@params);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex);
+                r = Error.InternalError<_Void>();
+            }
+            return new ResponseMessage<Hover, _Void>
+            {
+                id = request.id,
+                result = r.Success,
+                error = r.Error
+            };
+        }
+
+        protected virtual Result<Hover, Error<_Void>> Hover(TextDocumentPositionParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
         // textDocument/signatureHelp
         // textDocument/references
         // textDocument/documentHighlight
