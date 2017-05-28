@@ -9,12 +9,7 @@ namespace LanguageServer.Infrastructure.JsonDotNet
         private readonly JsonSerializerSettings _settings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore,
-            Converters = new JsonConverter[]
-            {
-                new NumberOrStringConverter(),
-                new NumberOrObjectConverter(),
-                new ArrayOrObjectConverter()
-            }
+            Converters = new JsonConverter[] { new EitherConverter() }
         };
 
         public override object Deserialize(Type objectType, string json)

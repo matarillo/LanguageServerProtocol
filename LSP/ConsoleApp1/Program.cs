@@ -1,8 +1,8 @@
 ﻿using LanguageServer;
+using LanguageServer.Infrastructure.JsonDotNet;
 using LanguageServer.Json;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,11 +12,52 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            TestReadAndHandle();
+        }
+        static void M()
+        {
+            SDS(new G
+            {
+                eo = E.B,
+                so = "string",
+                no = 123,
+            });
+            SDS(new G
+            {
+                eo = new F { name = "eo" },
+                so = new F { name = "so" },
+                no = new F { name = "no" },
+            });
+        }
+        static void SDS(G g)
+        {
+            var conv = new EitherConverter();
+            var json1 = JsonConvert.SerializeObject(g, conv);
+            Console.WriteLine(json1);
+            var g2 = JsonConvert.DeserializeObject<G>(json1, conv);
+            Console.WriteLine(g2.eo.IsLeft ? (object)g2.eo.Left : g2.eo.Right);
+            Console.WriteLine(g2.so.IsLeft ? (object)g2.so.Left : g2.so.Right);
+            Console.WriteLine(g2.no.IsLeft ? (object)g2.no.Left : g2.no.Right);
+        }
+        public enum E { A=1, B=2 }
+        public class F
+        {
+            public string name { get; set; }
+            public override string ToString()
+            {
+                return $"{{name:{this.name}}}";
+            }
+        }
+        public class G
+        {
+            public NumberOrObject<E, F> eo { get; set; }
+            public StringOrObject<F> so { get; set; }
+            public NumberOrObject<int, F> no { get; set; }
         }
 
         static void TestReadAndHandle()
         {
-            Serializer.Instance = new LanguageServer.Infrastructure.JsonDotNet.JsonDotNetSerializer();
+            Serializer.Instance = new JsonDotNetSerializer();
 
             var msIn = new System.IO.MemoryStream();
             var msOut = new System.IO.MemoryStream();

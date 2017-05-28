@@ -4,62 +4,32 @@ using System.Text;
 
 namespace LanguageServer.Json
 {
-    public sealed class ArrayOrObject<TElement, T> : IArrayOrObject
-        where TElement : class
-        where T : class
+    public sealed class ArrayOrObject<TElement, TObject> : Either<TElement[], TObject>
     {
-        private TElement[] _array;
-        private T _object;
+        public static implicit operator ArrayOrObject<TElement, TObject>(TElement[] left)
+            => new ArrayOrObject<TElement, TObject>(left);
 
-        // for deserializer
-        private ArrayOrObject()
+        public static implicit operator ArrayOrObject<TElement, TObject>(TObject right)
+            => new ArrayOrObject<TElement, TObject>(right);
+
+        public ArrayOrObject()
         {
         }
 
-        public ArrayOrObject(TElement[] value)
+        public ArrayOrObject(TElement[] left) : base(left)
         {
-            _array = value;
         }
 
-        public ArrayOrObject(T value)
+        public ArrayOrObject(TObject right) : base(right)
         {
-            _object = value;
         }
 
-        public static implicit operator ArrayOrObject<TElement, T>(TElement[] value) => new ArrayOrObject<TElement, T>(value);
-        public static implicit operator ArrayOrObject<TElement, T>(T value) => new ArrayOrObject<TElement, T>(value);
-
-        public bool IsArray { get => _array != null; }
-
-        public bool IsObject { get => _object != null; }
-
-        public TElement[] Array { get => _array ?? throw new InvalidOperationException(); }
-
-        public T Object { get => _object ?? throw new InvalidOperationException(); }
-
-        object[] IArrayOrObject.Array
+        protected override EitherTag OnDeserializing(JsonDataType jsonType)
         {
-            get => this.Array;
-            set
-            {
-                _array = (TElement[])value;
-                _object = null;
-            }
+            return
+                (jsonType == JsonDataType.Array) ? EitherTag.Left :
+                (jsonType == JsonDataType.Object) ? EitherTag.Right :
+                EitherTag.None;
         }
-
-        object IArrayOrObject.Object
-        {
-            get => this.Object;
-            set => throw new NotImplementedException();
-        }
-
-        Type IArrayOrObject.ArrayElementType => typeof(TElement);
-
-        Type IArrayOrObject.ObjectType => typeof(T);
-
-        public override string ToString() =>
-            _array != null ? "[" + string.Join(",", (IEnumerable<TElement>)_array) + "]" :
-            _object != null ? _object.ToString() :
-            "null";
     }
 }

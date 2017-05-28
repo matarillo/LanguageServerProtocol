@@ -6,43 +6,35 @@ using System.Threading.Tasks;
 
 namespace LanguageServer.Json
 {
-    public sealed class NumberOrString : IEquatable<NumberOrString>
+    public sealed class NumberOrString : Either<long, string>, IEquatable<NumberOrString>
     {
-        private readonly long? _numberValue;
-        private readonly string _stringValue;
+        public static implicit operator NumberOrString(long left) => new NumberOrString(left);
 
-        public NumberOrString(long value)
+        public static implicit operator NumberOrString(string right) => new NumberOrString(right);
+
+        public NumberOrString()
         {
-            _numberValue = value;
         }
 
-        public NumberOrString(string value)
+        public NumberOrString(long left) : base(left)
         {
-            _stringValue = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public bool IsNumber { get => _numberValue.HasValue; }
-
-        public bool IsString { get => _stringValue != null; }
-
-        public long NumberValue
+        public NumberOrString(string right) : base(right)
         {
-            get =>
-                _numberValue.HasValue ? _numberValue.Value :
-                throw new InvalidOperationException();
         }
 
-        public string StringValue
+        protected override EitherTag OnDeserializing(JsonDataType jsonType)
         {
-            get =>
-                _numberValue.HasValue ? _numberValue.Value.ToString() :
-                _stringValue != null ? _stringValue :
-                throw new InvalidOperationException();
+            return
+                (jsonType == JsonDataType.Number) ? EitherTag.Left :
+                (jsonType == JsonDataType.String) ? EitherTag.Right :
+                EitherTag.None;
         }
 
         public override int GetHashCode() =>
-            _numberValue.HasValue ? _numberValue.Value.GetHashCode() :
-            _stringValue != null ? _stringValue.GetHashCode() :
+            IsLeft ? Left.GetHashCode() :
+            IsRight ? Right.GetHashCode() :
             0;
 
         public override bool Equals(object obj)
@@ -52,21 +44,8 @@ namespace LanguageServer.Json
         }
 
         public bool Equals(NumberOrString other) =>
-            _numberValue.HasValue ? (_numberValue == other._numberValue) :
-            _stringValue != null ? (_stringValue == other._stringValue) :
-            (null == other._stringValue);
-
-        public string ToJsonValue() =>
-            _numberValue.HasValue ? _numberValue.Value.ToString() :
-            _stringValue != null ? "\"" + _stringValue + "\"" :
-            "null";
-
-        public override string ToString()
-        {
-            return ToJsonValue();
-        }
-
-        public static implicit operator NumberOrString(long value) => new NumberOrString(value);
-        public static implicit operator NumberOrString(string value) => new NumberOrString(value);
+            (IsLeft && other.IsLeft) ? (Left == other.Left) :
+            (IsRight && other.IsRight) ? (Right == other.Right) :
+            (!IsLeft && !IsRight && !other.IsLeft && !other.IsRight); // None == None
     }
 }
