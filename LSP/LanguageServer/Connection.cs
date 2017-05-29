@@ -111,6 +111,7 @@ namespace LanguageServer
         }
 
         public void SendRequest<TReq, TRes, TError>(RequestMessage<TReq> message, Action<ResponseMessage<TRes, TError>> responseHandler)
+            where TError : ResponseError
         {
             responseHandlers.Set(message.id, new ResponseHandler(typeof(ResponseMessage<TRes, TError>), o => responseHandler((ResponseMessage<TRes, TError>)o)));
             SendMessage(message);

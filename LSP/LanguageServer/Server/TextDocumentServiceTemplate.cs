@@ -81,9 +81,9 @@ namespace LanguageServer.Server
 
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/willSaveWaitUntil")]
-        public ResponseMessage<TextEdit[], _Void> WillSaveWaitUntilTextDocument(RequestMessage<WillSaveTextDocumentParams> request)
+        public ResponseMessage<TextEdit[]> WillSaveWaitUntilTextDocument(RequestMessage<WillSaveTextDocumentParams> request)
         {
-            Result<TextEdit[], Error<_Void>> r;
+            Result<TextEdit[], ResponseError> r;
             try
             {
                 r = WillSaveWaitUntilTextDocument(request.@params);
@@ -91,9 +91,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<TextEdit[], _Void>
+            return new ResponseMessage<TextEdit[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -101,7 +101,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<TextEdit[], Error<_Void>> WillSaveWaitUntilTextDocument(WillSaveTextDocumentParams @params)
+        protected virtual Result<TextEdit[], ResponseError> WillSaveWaitUntilTextDocument(WillSaveTextDocumentParams @params)
         {
             throw new NotImplementedException();
         }
@@ -145,9 +145,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: CompletionRegistrationOptions
         [JsonRpcMethod("textDocument/completion")]
-        public ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>, _Void> Completion(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>> Completion(RequestMessage<TextDocumentPositionParams> request)
         {
-            Result<ArrayOrObject<CompletionItem, CompletionList>, Error<_Void>> r;
+            Result<ArrayOrObject<CompletionItem, CompletionList>, ResponseError> r;
             try
             {
                 r = Completion(request.@params);
@@ -155,9 +155,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>, _Void>
+            return new ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>>
             {
                 id = request.id,
                 result = r.Success,
@@ -165,15 +165,15 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<ArrayOrObject<CompletionItem, CompletionList>, Error<_Void>> Completion(TextDocumentPositionParams @params)
+        protected virtual Result<ArrayOrObject<CompletionItem, CompletionList>, ResponseError> Completion(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }
 
         [JsonRpcMethod("completionItem/resolve")]
-        public ResponseMessage<CompletionItem, _Void> ResolveCompletionItem(RequestMessage<CompletionItem> request)
+        public ResponseMessage<CompletionItem> ResolveCompletionItem(RequestMessage<CompletionItem> request)
         {
-            Result<CompletionItem, Error<_Void>> r;
+            Result<CompletionItem, ResponseError> r;
             try
             {
                 r = ResolveCompletionItem(request.@params);
@@ -181,9 +181,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<CompletionItem, _Void>
+            return new ResponseMessage<CompletionItem>
             {
                 id = request.id,
                 result = r.Success,
@@ -191,7 +191,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<CompletionItem, Error<_Void>> ResolveCompletionItem(CompletionItem @params)
+        protected virtual Result<CompletionItem, ResponseError> ResolveCompletionItem(CompletionItem @params)
         {
             throw new NotImplementedException();
         }
@@ -199,9 +199,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/hover")]
-        public ResponseMessage<Hover, _Void> Hover(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<Hover> Hover(RequestMessage<TextDocumentPositionParams> request)
         {
-            Result<Hover, Error<_Void>> r;
+            Result<Hover, ResponseError> r;
             try
             {
                 r = Hover(request.@params);
@@ -209,9 +209,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<Hover, _Void>
+            return new ResponseMessage<Hover>
             {
                 id = request.id,
                 result = r.Success,
@@ -219,7 +219,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<Hover, Error<_Void>> Hover(TextDocumentPositionParams @params)
+        protected virtual Result<Hover, ResponseError> Hover(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }
@@ -227,9 +227,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: SignatureHelpRegistrationOptions
         [JsonRpcMethod("textDocument/signatureHelp")]
-        public ResponseMessage<SignatureHelp, _Void> SignatureHelp(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<SignatureHelp> SignatureHelp(RequestMessage<TextDocumentPositionParams> request)
         {
-            Result<SignatureHelp, Error<_Void>> r;
+            Result<SignatureHelp, ResponseError> r;
             try
             {
                 r = SignatureHelp(request.@params);
@@ -237,9 +237,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<SignatureHelp, _Void>
+            return new ResponseMessage<SignatureHelp>
             {
                 id = request.id,
                 result = r.Success,
@@ -247,7 +247,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<SignatureHelp, Error<_Void>> SignatureHelp(TextDocumentPositionParams @params)
+        protected virtual Result<SignatureHelp, ResponseError> SignatureHelp(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }
@@ -255,9 +255,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/references")]
-        public ResponseMessage<Location[], _Void> FindReferences(RequestMessage<ReferenceParams> request)
+        public ResponseMessage<Location[]> FindReferences(RequestMessage<ReferenceParams> request)
         {
-            Result<Location[], Error<_Void>> r;
+            Result<Location[], ResponseError> r;
             try
             {
                 r = FindReferences(request.@params);
@@ -265,9 +265,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<Location[], _Void>
+            return new ResponseMessage<Location[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -275,7 +275,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<Location[], Error<_Void>> FindReferences(ReferenceParams @params)
+        protected virtual Result<Location[], ResponseError> FindReferences(ReferenceParams @params)
         {
             throw new NotImplementedException();
         }
@@ -283,9 +283,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/documentHighlight")]
-        public ResponseMessage<DocumentHighlight[], _Void> DocumentHighlight(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<DocumentHighlight[]> DocumentHighlight(RequestMessage<TextDocumentPositionParams> request)
         {
-            Result<DocumentHighlight[], Error<_Void>> r;
+            Result<DocumentHighlight[], ResponseError> r;
             try
             {
                 r = DocumentHighlight(request.@params);
@@ -293,9 +293,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<DocumentHighlight[], _Void>
+            return new ResponseMessage<DocumentHighlight[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -303,7 +303,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<DocumentHighlight[], Error<_Void>> DocumentHighlight(TextDocumentPositionParams @params)
+        protected virtual Result<DocumentHighlight[], ResponseError> DocumentHighlight(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }
@@ -311,9 +311,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/documentSymbol")]
-        public ResponseMessage<SymbolInformation[], _Void> DocumentSymbols(RequestMessage<DocumentSymbolParams> request)
+        public ResponseMessage<SymbolInformation[]> DocumentSymbols(RequestMessage<DocumentSymbolParams> request)
         {
-            Result<SymbolInformation[], Error<_Void>> r;
+            Result<SymbolInformation[], ResponseError> r;
             try
             {
                 r = DocumentSymbols(request.@params);
@@ -321,9 +321,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<SymbolInformation[], _Void>
+            return new ResponseMessage<SymbolInformation[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -331,7 +331,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<SymbolInformation[], Error<_Void>> DocumentSymbols(DocumentSymbolParams @params)
+        protected virtual Result<SymbolInformation[], ResponseError> DocumentSymbols(DocumentSymbolParams @params)
         {
             throw new NotImplementedException();
         }
@@ -339,9 +339,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/formatting")]
-        public ResponseMessage<TextEdit[], _Void> DocumentFormatting(RequestMessage<DocumentFormattingParams> request)
+        public ResponseMessage<TextEdit[]> DocumentFormatting(RequestMessage<DocumentFormattingParams> request)
         {
-            Result<TextEdit[], Error<_Void>> r;
+            Result<TextEdit[], ResponseError> r;
             try
             {
                 r = DocumentFormatting(request.@params);
@@ -349,9 +349,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<TextEdit[], _Void>
+            return new ResponseMessage<TextEdit[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -359,7 +359,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<TextEdit[], Error<_Void>> DocumentFormatting(DocumentFormattingParams @params)
+        protected virtual Result<TextEdit[], ResponseError> DocumentFormatting(DocumentFormattingParams @params)
         {
             throw new NotImplementedException();
         }
@@ -367,9 +367,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/rangeFormatting")]
-        public ResponseMessage<TextEdit[], _Void> DocumentRangeFormatting(RequestMessage<DocumentRangeFormattingParams> request)
+        public ResponseMessage<TextEdit[]> DocumentRangeFormatting(RequestMessage<DocumentRangeFormattingParams> request)
         {
-            Result<TextEdit[], Error<_Void>> r;
+            Result<TextEdit[], ResponseError> r;
             try
             {
                 r = DocumentRangeFormatting(request.@params);
@@ -377,9 +377,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<TextEdit[], _Void>
+            return new ResponseMessage<TextEdit[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -387,7 +387,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<TextEdit[], Error<_Void>> DocumentRangeFormatting(DocumentRangeFormattingParams @params)
+        protected virtual Result<TextEdit[], ResponseError> DocumentRangeFormatting(DocumentRangeFormattingParams @params)
         {
             throw new NotImplementedException();
         }
@@ -395,9 +395,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: DocumentOnTypeFormattingRegistrationOptions
         [JsonRpcMethod("textDocument/onTypeFormatting")]
-        public ResponseMessage<TextEdit[], _Void> DocumentOnTypeFormatting(RequestMessage<DocumentOnTypeFormattingParams> request)
+        public ResponseMessage<TextEdit[]> DocumentOnTypeFormatting(RequestMessage<DocumentOnTypeFormattingParams> request)
         {
-            Result<TextEdit[], Error<_Void>> r;
+            Result<TextEdit[], ResponseError> r;
             try
             {
                 r = DocumentOnTypeFormatting(request.@params);
@@ -405,9 +405,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<TextEdit[], _Void>
+            return new ResponseMessage<TextEdit[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -415,7 +415,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<TextEdit[], Error<_Void>> DocumentOnTypeFormatting(DocumentOnTypeFormattingParams @params)
+        protected virtual Result<TextEdit[], ResponseError> DocumentOnTypeFormatting(DocumentOnTypeFormattingParams @params)
         {
             throw new NotImplementedException();
         }
@@ -423,9 +423,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/definition")]
-        public ResponseMessage<ArrayOrObject<Location, Location>, _Void> GotoDefinition(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<ArrayOrObject<Location, Location>> GotoDefinition(RequestMessage<TextDocumentPositionParams> request)
         {
-            Result<ArrayOrObject<Location, Location>, Error<_Void>> r;
+            Result<ArrayOrObject<Location, Location>, ResponseError> r;
             try
             {
                 r = GotoDefinition(request.@params);
@@ -433,9 +433,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<ArrayOrObject<Location, Location>, _Void>
+            return new ResponseMessage<ArrayOrObject<Location, Location>>
             {
                 id = request.id,
                 result = r.Success,
@@ -443,7 +443,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<ArrayOrObject<Location, Location>, Error<_Void>> GotoDefinition(TextDocumentPositionParams @params)
+        protected virtual Result<ArrayOrObject<Location, Location>, ResponseError> GotoDefinition(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }
@@ -451,9 +451,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/codeAction")]
-        public ResponseMessage<Command[], _Void> CodeAction(RequestMessage<CodeActionParams> request)
+        public ResponseMessage<Command[]> CodeAction(RequestMessage<CodeActionParams> request)
         {
-            Result<Command[], Error<_Void>> r;
+            Result<Command[], ResponseError> r;
             try
             {
                 r = CodeAction(request.@params);
@@ -461,9 +461,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<Command[], _Void>
+            return new ResponseMessage<Command[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -471,7 +471,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<Command[], Error<_Void>> CodeAction(CodeActionParams @params)
+        protected virtual Result<Command[], ResponseError> CodeAction(CodeActionParams @params)
         {
             throw new NotImplementedException();
         }
@@ -479,9 +479,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: CodeLensRegistrationOptions
         [JsonRpcMethod("textDocument/codeLens")]
-        public ResponseMessage<CodeLens[], _Void> CodeLens(RequestMessage<CodeLensParams> request)
+        public ResponseMessage<CodeLens[]> CodeLens(RequestMessage<CodeLensParams> request)
         {
-            Result<CodeLens[], Error<_Void>> r;
+            Result<CodeLens[], ResponseError> r;
             try
             {
                 r = CodeLens(request.@params);
@@ -489,9 +489,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<CodeLens[], _Void>
+            return new ResponseMessage<CodeLens[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -499,15 +499,15 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<CodeLens[], Error<_Void>> CodeLens(CodeLensParams @params)
+        protected virtual Result<CodeLens[], ResponseError> CodeLens(CodeLensParams @params)
         {
             throw new NotImplementedException();
         }
 
         [JsonRpcMethod("codeLens/resolve")]
-        public ResponseMessage<CodeLens, _Void> ResolveCodeLens(RequestMessage<CodeLens> request)
+        public ResponseMessage<CodeLens> ResolveCodeLens(RequestMessage<CodeLens> request)
         {
-            Result<CodeLens, Error<_Void>> r;
+            Result<CodeLens, ResponseError> r;
             try
             {
                 r = ResolveCodeLens(request.@params);
@@ -515,9 +515,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<CodeLens, _Void>
+            return new ResponseMessage<CodeLens>
             {
                 id = request.id,
                 result = r.Success,
@@ -525,7 +525,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<CodeLens, Error<_Void>> ResolveCodeLens(CodeLens @params)
+        protected virtual Result<CodeLens, ResponseError> ResolveCodeLens(CodeLens @params)
         {
             throw new NotImplementedException();
         }
@@ -533,9 +533,9 @@ namespace LanguageServer.Server
         // dynam0icRegistration?: boolean;
         // Registration Options: DocumentLinkRegistrationOptions
         [JsonRpcMethod("textDocument/documentLink")]
-        public ResponseMessage<DocumentLink[], _Void> DocumentLink(RequestMessage<DocumentLinkParams> request)
+        public ResponseMessage<DocumentLink[]> DocumentLink(RequestMessage<DocumentLinkParams> request)
         {
-            Result<DocumentLink[], Error<_Void>> r;
+            Result<DocumentLink[], ResponseError> r;
             try
             {
                 r = DocumentLink(request.@params);
@@ -543,9 +543,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<DocumentLink[], _Void>
+            return new ResponseMessage<DocumentLink[]>
             {
                 id = request.id,
                 result = r.Success,
@@ -553,15 +553,15 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<DocumentLink[], Error<_Void>> DocumentLink(DocumentLinkParams @params)
+        protected virtual Result<DocumentLink[], ResponseError> DocumentLink(DocumentLinkParams @params)
         {
             throw new NotImplementedException();
         }
 
         [JsonRpcMethod("documentLink/resolve")]
-        public ResponseMessage<DocumentLink, _Void> ResolveDocumentLink(RequestMessage<DocumentLink> request)
+        public ResponseMessage<DocumentLink> ResolveDocumentLink(RequestMessage<DocumentLink> request)
         {
-            Result<DocumentLink, Error<_Void>> r;
+            Result<DocumentLink, ResponseError> r;
             try
             {
                 r = ResolveDocumentLink(request.@params);
@@ -569,9 +569,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<DocumentLink, _Void>
+            return new ResponseMessage<DocumentLink>
             {
                 id = request.id,
                 result = r.Success,
@@ -579,7 +579,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<DocumentLink, Error<_Void>> ResolveDocumentLink(DocumentLink @params)
+        protected virtual Result<DocumentLink, ResponseError> ResolveDocumentLink(DocumentLink @params)
         {
             throw new NotImplementedException();
         }
@@ -587,9 +587,9 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/rename")]
-        public ResponseMessage<WorkspaceEdit, _Void> Rename(RequestMessage<RenameParams> request)
+        public ResponseMessage<WorkspaceEdit> Rename(RequestMessage<RenameParams> request)
         {
-            Result<WorkspaceEdit, Error<_Void>> r;
+            Result<WorkspaceEdit, ResponseError> r;
             try
             {
                 r = Rename(request.@params);
@@ -597,9 +597,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<_Void>();
+                r = Error.InternalError();
             }
-            return new ResponseMessage<WorkspaceEdit, _Void>
+            return new ResponseMessage<WorkspaceEdit>
             {
                 id = request.id,
                 result = r.Success,
@@ -607,7 +607,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<WorkspaceEdit, Error<_Void>> Rename(RenameParams @params)
+        protected virtual Result<WorkspaceEdit, ResponseError> Rename(RenameParams @params)
         {
             throw new NotImplementedException();
         }

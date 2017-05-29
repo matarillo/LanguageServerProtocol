@@ -22,9 +22,9 @@ namespace LanguageServer.Server
         public Proxy Proxy { get => _proxy; }
 
         [JsonRpcMethod("initialize")]
-        public _ResponseMessage<InitializeResult, InitializeError> Initialize(RequestMessage<InitializeParams> request)
+        public ResponseMessage<InitializeResult, ResponseError<InitializeErrorData>> Initialize(RequestMessage<InitializeParams> request)
         {
-            Result<InitializeResult, InitializeError> r;
+            Result<InitializeResult, ResponseError<InitializeErrorData>> r;
             try
             {
                 r = Initialize(request.@params);
@@ -32,9 +32,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error._InternalError<InitializeError>();
+                r = Error.InternalError<InitializeErrorData>(null);
             }
-            return new _ResponseMessage<InitializeResult, InitializeError>
+            return new ResponseMessage<InitializeResult, ResponseError<InitializeErrorData>>
             {
                 id = request.id,
                 result = r.Success,
@@ -42,7 +42,7 @@ namespace LanguageServer.Server
             };
         }
 
-        protected virtual Result<InitializeResult, InitializeError> Initialize(InitializeParams @params)
+        protected virtual Result<InitializeResult, ResponseError<InitializeErrorData>> Initialize(InitializeParams @params)
         {
             throw new NotImplementedException();
         }
@@ -65,7 +65,7 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("shutdown")]
-        public _ResponseMessage Shutdown(RequestMessage request)
+        public ResponseMessage Shutdown(RequestMessage request)
         {
             Result<_Void, ResponseError> r;
             try
@@ -75,9 +75,9 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error._InternalError<ResponseError>();
+                r = Error.InternalError();
             }
-            return new _ResponseMessage
+            return new ResponseMessage
             {
                 id = request.id,
                 error = r.Error

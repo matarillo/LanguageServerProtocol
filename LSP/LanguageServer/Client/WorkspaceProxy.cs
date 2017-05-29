@@ -16,17 +16,17 @@ namespace LanguageServer.Client
             _connection = connection;
         }
 
-        public Task<Result<ApplyWorkspaceEditResponse, Error<_Void>>> ApplyEdit(ApplyWorkspaceEditParams @params)
+        public Task<Result<ApplyWorkspaceEditResponse, ResponseError>> ApplyEdit(ApplyWorkspaceEditParams @params)
         {
-            var tcs = new TaskCompletionSource<Result<ApplyWorkspaceEditResponse, Error<_Void>>>();
-            _connection.SendRequest<ApplyWorkspaceEditParams, ApplyWorkspaceEditResponse, _Void>(
+            var tcs = new TaskCompletionSource<Result<ApplyWorkspaceEditResponse, ResponseError>>();
+            _connection.SendRequest<ApplyWorkspaceEditParams, ApplyWorkspaceEditResponse, ResponseError>(
                 new RequestMessage<ApplyWorkspaceEditParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "workspace/applyEdit",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new Result<ApplyWorkspaceEditResponse, Error<_Void>>(res.result, res.error)));
+                res => tcs.TrySetResult(new Result<ApplyWorkspaceEditResponse, ResponseError>(res.result, res.error)));
             return tcs.Task;
         }
     }

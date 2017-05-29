@@ -84,7 +84,7 @@ namespace ConsoleApp1
                     }
                 }
             };
-            conn.SendRequest<LanguageServer.Parameters.General.InitializeParams, LanguageServer.Parameters.General.InitializeResult, LanguageServer.Parameters.General.InitializeError>(r1, x => { });
+            conn.SendRequest<LanguageServer.Parameters.General.InitializeParams, LanguageServer.Parameters.General.InitializeResult, ResponseError<LanguageServer.Parameters.General.InitializeErrorData>>(r1, x => { });
             msOut.Position = 0L;
             var in1 = msOut.ToArray();
             msIn.SetLength(0L);

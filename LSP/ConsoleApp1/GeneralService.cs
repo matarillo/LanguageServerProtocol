@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     public class GeneralService : GeneralServiceTemplate
     {
-        protected override Result<InitializeResult, InitializeError> Initialize(InitializeParams @params)
+        protected override Result<InitializeResult, ResponseError<InitializeErrorData>> Initialize(InitializeParams @params)
         {
             Console.WriteLine("[Initialize]");
             return new InitializeResult

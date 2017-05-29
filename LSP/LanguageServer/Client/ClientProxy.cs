@@ -16,32 +16,31 @@ namespace LanguageServer.Client
             _connection = connection;
         }
 
-        public Task<Result<_Void, Error<_Void>>> RegisterCapability(RegistrationParams @params)
+        public Task<Result<_Void, ResponseError>> RegisterCapability(RegistrationParams @params)
         {
-            var tcs = new TaskCompletionSource<Result<_Void, Error<_Void>>>();
-            _connection.SendRequest<RegistrationParams, _Void, _Void>(
+            var tcs = new TaskCompletionSource<Result<_Void, ResponseError>>();
+            _connection.SendRequest<RegistrationParams, _Void, ResponseError>(
                 new RequestMessage<RegistrationParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "client/registerCapability",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new Result<_Void, Error<_Void>>(res.result, res.error)));
+                res => tcs.TrySetResult(new Result<_Void, ResponseError>(res.result, res.error)));
             return tcs.Task;
         }
 
-
-        public Task<Result<_Void, Error<_Void>>> UnregisterCapability(UnregistrationParams @params)
+        public Task<Result<_Void, ResponseError>> UnregisterCapability(UnregistrationParams @params)
         {
-            var tcs = new TaskCompletionSource<Result<_Void, Error<_Void>>>();
-            _connection.SendRequest<UnregistrationParams, _Void, _Void>(
+            var tcs = new TaskCompletionSource<Result<_Void, ResponseError>>();
+            _connection.SendRequest<UnregistrationParams, _Void, ResponseError>(
                 new RequestMessage<UnregistrationParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "client/unregisterCapability",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new Result<_Void, Error<_Void>>(res.result, res.error)));
+                res => tcs.TrySetResult(new Result<_Void, ResponseError>(res.result, res.error)));
             return tcs.Task;
         }
     }

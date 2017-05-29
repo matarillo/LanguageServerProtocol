@@ -22,11 +22,6 @@ namespace LanguageServer.Parameters.General
         public ServerCapabilities capabilities { get; set; }
     }
 
-    public class InitializeError : ResponseError
-    {
-        public InitializeErrorData data { get; set; }
-    }
-
     public class InitializeErrorData
     {
         public bool retry { get; set; }

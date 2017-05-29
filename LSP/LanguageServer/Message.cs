@@ -61,26 +61,19 @@ namespace LanguageServer
         public T @params { get; set; }
     }
 
-    public class ResponseMessage<T, TErrorData> : ResponseMessageBase
-    {
-        public T result { get; set; }
-
-        public Error<TErrorData> error { get; set; }
-    }
-
-    public class _ResponseMessage : ResponseMessageBase
+    public class ResponseMessage : ResponseMessageBase
     {
         public ResponseError error { get; set; }
     }
 
-    public class _ResponseMessage<T> : ResponseMessageBase
+    public class ResponseMessage<T> : ResponseMessageBase
     {
         public T result { get; set; }
 
         public ResponseError error { get; set; }
     }
 
-    public class _ResponseMessage<T, TError> : ResponseMessageBase
+    public class ResponseMessage<T, TError> : ResponseMessageBase
         where TError : ResponseError
     {
         public T result { get; set; }
@@ -102,6 +95,11 @@ namespace LanguageServer
         public ErrorCodes code { get; set; }
 
         public string message { get; set; }
+    }
+
+    public class ResponseError<T> : ResponseError
+    {
+        public T data { get; set; }
     }
 
     public enum ErrorCodes

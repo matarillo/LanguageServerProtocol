@@ -25,17 +25,17 @@ namespace LanguageServer.Client
             });
         }
 
-        public Task<Result<MessageActionItem, Error<_Void>>> ShowMessageRequest(ShowMessageRequestParams @params)
+        public Task<Result<MessageActionItem, ResponseError>> ShowMessageRequest(ShowMessageRequestParams @params)
         {
-            var tcs = new TaskCompletionSource<Result<MessageActionItem, Error<_Void>>>();
-            _connection.SendRequest<ShowMessageRequestParams, MessageActionItem, _Void>(
+            var tcs = new TaskCompletionSource<Result<MessageActionItem, ResponseError>>();
+            _connection.SendRequest<ShowMessageRequestParams, MessageActionItem, ResponseError>(
                 new RequestMessage<ShowMessageRequestParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "window/showMessageRequest",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new Result<MessageActionItem, Error<_Void>>(res.result, res.error)));
+                res => tcs.TrySetResult(new Result<MessageActionItem, ResponseError>(res.result, res.error)));
             return tcs.Task;
         }
 
