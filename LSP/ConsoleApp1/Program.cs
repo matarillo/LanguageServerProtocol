@@ -107,11 +107,11 @@ namespace ConsoleApp1
 
             Console.WriteLine("---2");
             msOut.SetLength(0L);
-            var r2 = new NotificationMessage<LanguageServer.Parameters._Void>
+            var r2 = new VoidNotificationMessage
             {
                 method = "initialized"
             };
-            conn.SendNotification<LanguageServer.Parameters._Void>(r2);
+            conn.SendNotification(r2);
             msOut.Position = 0L;
             var in2 = msOut.ToArray();
             msIn.SetLength(0L);

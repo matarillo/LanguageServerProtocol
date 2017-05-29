@@ -117,7 +117,18 @@ namespace LanguageServer
             SendMessage(message);
         }
 
+        public void SendRequest<TReq>(RequestMessage<TReq> message, Action<VoidResponseMessage> responseHandler)
+        {
+            responseHandlers.Set(message.id, new ResponseHandler(typeof(VoidResponseMessage), o => responseHandler((VoidResponseMessage)o)));
+            SendMessage(message);
+        }
+
         public void SendNotification<T>(NotificationMessage<T> message)
+        {
+            SendMessage(message);
+        }
+
+        public void SendNotification(VoidNotificationMessage message)
         {
             SendMessage(message);
         }

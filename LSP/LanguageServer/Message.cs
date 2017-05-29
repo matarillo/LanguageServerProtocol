@@ -51,19 +51,25 @@ namespace LanguageServer
         public NumberOrString id { get; set; }
     }
 
-    public class RequestMessage : MethodCall
+    public class VoidRequestMessage : MethodCall
     {
         public NumberOrString id { get; set; }
     }
 
-    public class RequestMessage<T> : RequestMessage
+    public class RequestMessage<T> : VoidRequestMessage
     {
         public T @params { get; set; }
     }
 
-    public class ResponseMessage : ResponseMessageBase
+    public class VoidResponseMessage : ResponseMessageBase
     {
         public ResponseError error { get; set; }
+    }
+
+    public class VoidResponseMessage<TError> : ResponseMessageBase
+        where TError : ResponseError
+    {
+        public TError error { get; set; }
     }
 
     public class ResponseMessage<T> : ResponseMessageBase
@@ -81,11 +87,11 @@ namespace LanguageServer
         public TError error { get; set; }
     }
 
-    public class NotificationMessage : MethodCall
+    public class VoidNotificationMessage : MethodCall
     {
     }
 
-    public class NotificationMessage<T> : NotificationMessage
+    public class NotificationMessage<T> : VoidNotificationMessage
     {
         public T @params { get; set; }
     }

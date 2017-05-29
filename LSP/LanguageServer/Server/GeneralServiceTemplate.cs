@@ -48,7 +48,7 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("initialized")]
-        public void Initialized(NotificationMessage notification)
+        public void Initialized(VoidNotificationMessage notification)
         {
             try
             {
@@ -65,9 +65,9 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("shutdown")]
-        public ResponseMessage Shutdown(RequestMessage request)
+        public VoidResponseMessage Shutdown(VoidRequestMessage request)
         {
-            Result<_Void, ResponseError> r;
+            VoidResult<ResponseError> r;
             try
             {
                 r = Shutdown();
@@ -77,20 +77,20 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Error.InternalError();
             }
-            return new ResponseMessage
+            return new VoidResponseMessage
             {
                 id = request.id,
                 error = r.Error
             };
         }
 
-        protected virtual Result<_Void, ResponseError> Shutdown()
+        protected virtual VoidResult<ResponseError> Shutdown()
         {
             throw new NotImplementedException();
         }
 
         [JsonRpcMethod("exit")]
-        public void Exit(NotificationMessage notification)
+        public void Exit(VoidNotificationMessage notification)
         {
             try
             {

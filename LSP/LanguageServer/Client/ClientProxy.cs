@@ -16,31 +16,31 @@ namespace LanguageServer.Client
             _connection = connection;
         }
 
-        public Task<Result<_Void, ResponseError>> RegisterCapability(RegistrationParams @params)
+        public Task<VoidResult<ResponseError>> RegisterCapability(RegistrationParams @params)
         {
-            var tcs = new TaskCompletionSource<Result<_Void, ResponseError>>();
-            _connection.SendRequest<RegistrationParams, _Void, ResponseError>(
+            var tcs = new TaskCompletionSource<VoidResult<ResponseError>>();
+            _connection.SendRequest<RegistrationParams>(
                 new RequestMessage<RegistrationParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "client/registerCapability",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new Result<_Void, ResponseError>(res.result, res.error)));
+                res => tcs.TrySetResult(new VoidResult<ResponseError>(res.error)));
             return tcs.Task;
         }
 
-        public Task<Result<_Void, ResponseError>> UnregisterCapability(UnregistrationParams @params)
+        public Task<VoidResult<ResponseError>> UnregisterCapability(UnregistrationParams @params)
         {
-            var tcs = new TaskCompletionSource<Result<_Void, ResponseError>>();
-            _connection.SendRequest<UnregistrationParams, _Void, ResponseError>(
+            var tcs = new TaskCompletionSource<VoidResult<ResponseError>>();
+            _connection.SendRequest<UnregistrationParams>(
                 new RequestMessage<UnregistrationParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "client/unregisterCapability",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new Result<_Void, ResponseError>(res.result, res.error)));
+                res => tcs.TrySetResult(new VoidResult<ResponseError>(res.error)));
             return tcs.Task;
         }
     }
