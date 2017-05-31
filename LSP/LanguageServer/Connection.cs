@@ -215,33 +215,61 @@ namespace LanguageServer
         public void AddDefinedJsonRpcMethods(Assembly targetAssembly)
         {
             var rpcType = typeof(JsonRpcService).GetTypeInfo();
-            var methodCallType = typeof(MethodCall).GetTypeInfo();
             var serviceTypes = targetAssembly.DefinedTypes
                 .Where(x => rpcType.IsAssignableFrom(x))
                 .Select(x => x.AsType());
             foreach (var serviceType in serviceTypes)
             {
-                var rpcMethods = serviceType.GetRuntimeMethods()
-                    .Select(x => new
-                    {
-                        MethodInfo = x,
-                        RpcMethodName = x.GetCustomAttribute<JsonRpcMethodAttribute>()?.Method,
-                        Paremeters = x.GetParameters(),
-                        ReturnType = x.ReturnType
-                    })
-                    .Where(x => x.RpcMethodName != null
-                        && x.Paremeters.Length == 1
-                        && methodCallType.IsAssignableFrom(x.Paremeters[0].ParameterType.GetTypeInfo()));
-                foreach (var method in rpcMethods)
+                AddDefinedJsonRpcMethodsInternal(serviceType);
+            }
+        }
+
+        public void AddDefinedJsonRpcMethods(Type[] serviceTypes)
+        {
+            var rpcType = typeof(JsonRpcService).GetTypeInfo();
+            if (serviceTypes.Any(x =>  !rpcType.IsAssignableFrom(x.GetTypeInfo())))
+            {
+                throw new ArgumentException("Specify types derived from JsonRpcService", nameof(serviceTypes));
+            }
+            foreach (var serviceType in serviceTypes)
+            {
+                AddDefinedJsonRpcMethodsInternal(serviceType);
+            }
+        }
+
+        public void AddDefinedJsonRpcMethods(Type serviceType)
+        {
+            var rpcType = typeof(JsonRpcService).GetTypeInfo();
+            if (!rpcType.IsAssignableFrom(serviceType.GetTypeInfo()))
+            {
+                throw new ArgumentException("Specify a type derived from JsonRpcService", nameof(serviceType));
+            }
+            AddDefinedJsonRpcMethodsInternal(serviceType);
+        }
+
+        private void AddDefinedJsonRpcMethodsInternal(Type serviceType)
+        {
+            var methodCallType = typeof(MethodCall).GetTypeInfo();
+            var rpcMethods = serviceType.GetRuntimeMethods()
+                .Select(x => new
                 {
-                    if (method.ReturnType == typeof(void))
-                    {
-                        AddNotificationHandler(method.RpcMethodName, CreateNotificationHandler(serviceType, method.MethodInfo));
-                    }
-                    else
-                    {
-                        AddRequestHandler(method.RpcMethodName, CreateRequestHandler(serviceType, method.MethodInfo));
-                    }
+                    MethodInfo = x,
+                    RpcMethodName = x.GetCustomAttribute<JsonRpcMethodAttribute>()?.Method,
+                    Paremeters = x.GetParameters(),
+                    ReturnType = x.ReturnType
+                })
+                .Where(x => x.RpcMethodName != null
+                    && x.Paremeters.Length == 1
+                    && methodCallType.IsAssignableFrom(x.Paremeters[0].ParameterType.GetTypeInfo()));
+            foreach (var method in rpcMethods)
+            {
+                if (method.ReturnType == typeof(void))
+                {
+                    AddNotificationHandler(method.RpcMethodName, CreateNotificationHandler(serviceType, method.MethodInfo));
+                }
+                else
+                {
+                    AddRequestHandler(method.RpcMethodName, CreateRequestHandler(serviceType, method.MethodInfo));
                 }
             }
         }
