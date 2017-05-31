@@ -26,7 +26,7 @@ namespace LanguageServer.Client
                     method = "workspace/applyEdit",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new Result<ApplyWorkspaceEditResponse, ResponseError>(res.result, res.error)));
+                res => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
     }

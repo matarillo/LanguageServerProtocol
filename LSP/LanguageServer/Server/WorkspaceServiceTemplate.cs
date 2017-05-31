@@ -72,13 +72,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<SymbolInformation[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<SymbolInformation[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -100,13 +100,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<dynamic, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<dynamic>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 

@@ -32,13 +32,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError<InitializeErrorData>(null);
+                r = Result<InitializeResult, ResponseError<InitializeErrorData>>.Error(Error.InternalError<InitializeErrorData>(null));
             }
             return new ResponseMessage<InitializeResult, ResponseError<InitializeErrorData>>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -75,12 +75,12 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = VoidResult<ResponseError>.Error(Error.InternalError());
             }
             return new VoidResponseMessage
             {
                 id = request.id,
-                error = r.Error
+                error = r.ErrorValue
             };
         }
 

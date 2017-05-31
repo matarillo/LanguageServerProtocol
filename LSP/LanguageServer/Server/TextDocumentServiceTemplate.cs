@@ -91,13 +91,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<TextEdit[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<TextEdit[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -155,13 +155,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<ArrayOrObject<CompletionItem, CompletionList>, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -181,13 +181,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<CompletionItem, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<CompletionItem>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -209,13 +209,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<Hover, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<Hover>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -237,13 +237,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<SignatureHelp, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<SignatureHelp>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -265,13 +265,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<Location[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<Location[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -293,13 +293,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<DocumentHighlight[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<DocumentHighlight[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -321,13 +321,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<SymbolInformation[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<SymbolInformation[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -349,13 +349,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<TextEdit[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<TextEdit[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -377,13 +377,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<TextEdit[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<TextEdit[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -405,13 +405,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<TextEdit[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<TextEdit[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -433,13 +433,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<ArrayOrObject<Location, Location>, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<ArrayOrObject<Location, Location>>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -461,13 +461,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<Command[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<Command[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -489,13 +489,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<CodeLens[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<CodeLens[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -515,13 +515,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<CodeLens, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<CodeLens>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -543,13 +543,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<DocumentLink[], ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<DocumentLink[]>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -569,13 +569,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<DocumentLink, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<DocumentLink>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 
@@ -597,13 +597,13 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Error.InternalError();
+                r = Result<WorkspaceEdit, ResponseError>.Error(Error.InternalError());
             }
             return new ResponseMessage<WorkspaceEdit>
             {
                 id = request.id,
-                result = r.Success,
-                error = r.Error
+                result = r.SuccessValue,
+                error = r.ErrorValue
             };
         }
 

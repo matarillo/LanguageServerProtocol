@@ -26,7 +26,7 @@ namespace LanguageServer.Client
                     method = "client/registerCapability",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new VoidResult<ResponseError>(res.error)));
+                res => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
 
@@ -40,7 +40,7 @@ namespace LanguageServer.Client
                     method = "client/unregisterCapability",
                     @params = @params
                 },
-                res => tcs.TrySetResult(new VoidResult<ResponseError>(res.error)));
+                res => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
     }

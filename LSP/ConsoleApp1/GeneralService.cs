@@ -11,19 +11,25 @@ namespace ConsoleApp1
         protected override Result<InitializeResult, ResponseError<InitializeErrorData>> Initialize(InitializeParams @params)
         {
             Console.WriteLine("[Initialize]");
-            return new InitializeResult
+            return Result<InitializeResult, ResponseError<InitializeErrorData>>.Success(new InitializeResult
             {
                 capabilities = new ServerCapabilities
                 {
                     definitionProvider = true,
                     textDocumentSync = TextDocumentSyncKind.Full
                 }
-            };
+            });
         }
 
         protected override void Initialized()
         {
             Console.WriteLine("[Initialized]");
+        }
+
+        protected override VoidResult<ResponseError> Shutdown()
+        {
+            Console.WriteLine("Shutdown");
+            return VoidResult<ResponseError>.Success();
         }
     }
 }

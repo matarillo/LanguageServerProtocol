@@ -1,4 +1,5 @@
 ﻿using LanguageServer.Json;
+using System;
 
 namespace LanguageServer
 {
@@ -39,6 +40,32 @@ namespace LanguageServer
     public abstract class Message
     {
         public string jsonrpc { get; set; } = "2.0";
+
+        public static Result<T, ResponseError> ToResult<T>(ResponseMessage<T> response)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Result<T, TError> ToResult<T, TError>(ResponseMessage<T, TError> response)
+            where TError : ResponseError
+        {
+            throw new NotImplementedException();
+        }
+
+        public static VoidResult<ResponseError> ToResult(VoidResponseMessage response)
+        {
+            return (response.error == null)
+                ? VoidResult<ResponseError>.Success()
+                : VoidResult<ResponseError>.Error(response.error);
+        }
+
+        public static VoidResult<TError> ToResult<T, TError>(VoidResponseMessage<TError> response)
+            where TError : ResponseError
+        {
+            return (response.error == null)
+                ? VoidResult<TError>.Success()
+                : VoidResult<TError>.Error(response.error);
+        }
     }
 
     public abstract class MethodCall : Message
