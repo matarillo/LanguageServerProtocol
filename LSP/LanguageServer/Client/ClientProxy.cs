@@ -19,28 +19,28 @@ namespace LanguageServer.Client
         public Task<VoidResult<ResponseError>> RegisterCapability(RegistrationParams @params)
         {
             var tcs = new TaskCompletionSource<VoidResult<ResponseError>>();
-            _connection.SendRequest<RegistrationParams>(
+            _connection.SendRequest(
                 new RequestMessage<RegistrationParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "client/registerCapability",
                     @params = @params
                 },
-                res => tcs.TrySetResult(Message.ToResult(res)));
+                (VoidResponseMessage res) => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
 
         public Task<VoidResult<ResponseError>> UnregisterCapability(UnregistrationParams @params)
         {
             var tcs = new TaskCompletionSource<VoidResult<ResponseError>>();
-            _connection.SendRequest<UnregistrationParams>(
+            _connection.SendRequest(
                 new RequestMessage<UnregistrationParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "client/unregisterCapability",
                     @params = @params
                 },
-                res => tcs.TrySetResult(Message.ToResult(res)));
+                (VoidResponseMessage res) => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
     }

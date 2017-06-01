@@ -19,14 +19,14 @@ namespace LanguageServer.Client
         public Task<Result<ApplyWorkspaceEditResponse, ResponseError>> ApplyEdit(ApplyWorkspaceEditParams @params)
         {
             var tcs = new TaskCompletionSource<Result<ApplyWorkspaceEditResponse, ResponseError>>();
-            _connection.SendRequest<ApplyWorkspaceEditParams, ApplyWorkspaceEditResponse, ResponseError>(
+            _connection.SendRequest(
                 new RequestMessage<ApplyWorkspaceEditParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "workspace/applyEdit",
                     @params = @params
                 },
-                res => tcs.TrySetResult(Message.ToResult(res)));
+                (ResponseMessage<ApplyWorkspaceEditResponse> res) => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
     }

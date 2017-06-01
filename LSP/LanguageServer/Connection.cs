@@ -110,27 +110,18 @@ namespace LanguageServer
             }
         }
 
-        public void SendRequest<TReq, TRes, TError>(RequestMessage<TReq> message, Action<ResponseMessage<TRes, TError>> responseHandler)
-            where TError : ResponseError
+        public void SendRequest<TRequest, TResponse>(TRequest request, Action<TResponse> responseHandler)
+            where TRequest : RequestMessageBase
+            where TResponse : ResponseMessageBase
         {
-            responseHandlers.Set(message.id, new ResponseHandler(typeof(ResponseMessage<TRes, TError>), o => responseHandler((ResponseMessage<TRes, TError>)o)));
-            SendMessage(message);
+            responseHandlers.Set(request.id, new ResponseHandler(typeof(TResponse), o => responseHandler((TResponse)o)));
+            SendMessage(request);
         }
 
-        public void SendRequest<TReq>(RequestMessage<TReq> message, Action<VoidResponseMessage> responseHandler)
+        public void SendNotification<TNotification>(TNotification notification)
+            where TNotification : NotificationMessageBase
         {
-            responseHandlers.Set(message.id, new ResponseHandler(typeof(VoidResponseMessage), o => responseHandler((VoidResponseMessage)o)));
-            SendMessage(message);
-        }
-
-        public void SendNotification<T>(NotificationMessage<T> message)
-        {
-            SendMessage(message);
-        }
-
-        public void SendNotification(VoidNotificationMessage message)
-        {
-            SendMessage(message);
+            SendMessage(notification);
         }
 
         public void SendCancellation(NumberOrString id)

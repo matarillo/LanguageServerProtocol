@@ -28,14 +28,14 @@ namespace LanguageServer.Client
         public Task<Result<MessageActionItem, ResponseError>> ShowMessageRequest(ShowMessageRequestParams @params)
         {
             var tcs = new TaskCompletionSource<Result<MessageActionItem, ResponseError>>();
-            _connection.SendRequest<ShowMessageRequestParams, MessageActionItem, ResponseError>(
+            _connection.SendRequest(
                 new RequestMessage<ShowMessageRequestParams>
                 {
                     id = IdGenerator.Instance.Next(),
                     method = "window/showMessageRequest",
                     @params = @params
                 },
-                res => tcs.TrySetResult(Message.ToResult(res)));
+                (ResponseMessage<MessageActionItem> res) => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
 

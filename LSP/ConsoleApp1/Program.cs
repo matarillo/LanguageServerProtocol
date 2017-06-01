@@ -15,6 +15,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             TestReadAndHandle();
+            TestShutdown();
         }
 
         static void TestReadAndHandle()
@@ -46,7 +47,7 @@ namespace ConsoleApp1
                     }
                 }
             };
-            conn.SendRequest<InitializeParams, InitializeResult, ResponseError<InitializeErrorData>>(r1, x => { });
+            conn.SendRequest(r1, (ResponseMessage<InitializeResult, ResponseError<InitializeErrorData>> x) => { });
             msOut.Position = 0L;
             var in1 = msOut.ToArray();
             msIn.SetLength(0L);
@@ -107,6 +108,43 @@ namespace ConsoleApp1
             }
 
             Console.WriteLine("closed");
+        }
+
+        static void TestShutdown()
+        {
+            Serializer.Instance = new JsonDotNetSerializer();
+
+            var msIn = new MemoryStream();
+            var msOut = new MemoryStream();
+            var conn = new Connection(msIn, msOut);
+            conn.AddDefinedJsonRpcMethods(new[] { typeof(GeneralService) });
+
+            var req = new VoidRequestMessage { id = 123, method = "shutdown" };
+            conn.SendRequest(req, (VoidResponseMessage res) =>
+            {
+                var r = Message.ToResult(res);
+                Console.WriteLine("--response--");
+                Console.WriteLine("id: " + (res.id.IsLeft ? (object)res.id.Left : res.id.Right));
+                Console.WriteLine(r.IsSuccess ? "Success" : "Error: " + r.ErrorValue);
+                Console.WriteLine("--response end--");
+            });
+
+            msOut.Position = 0L;
+            var in1 = msOut.ToArray();
+            msIn.SetLength(0L);
+            msIn.Write(in1, 0, in1.Length);
+            msIn.Position = 0L;
+            msOut.SetLength(0L);
+            conn.TestReadAndHandle();
+
+            msOut.Position = 0L;
+            var in2 = msOut.ToArray();
+            msIn.SetLength(0L);
+            msIn.Write(in2, 0, in2.Length);
+            msIn.Position = 0L;
+            msOut.SetLength(0L);
+            conn.TestReadAndHandle();
+
         }
     }
 }

@@ -73,19 +73,23 @@ namespace LanguageServer
         public string method { get; set; }
     }
 
+    public abstract class RequestMessageBase : MethodCall
+    {
+        public NumberOrString id { get; set; }
+    }
+
+    public class VoidRequestMessage : RequestMessageBase
+    {
+    }
+
+    public class RequestMessage<T> : RequestMessageBase
+    {
+        public T @params { get; set; }
+    }
+
     public abstract class ResponseMessageBase : Message
     {
         public NumberOrString id { get; set; }
-    }
-
-    public class VoidRequestMessage : MethodCall
-    {
-        public NumberOrString id { get; set; }
-    }
-
-    public class RequestMessage<T> : VoidRequestMessage
-    {
-        public T @params { get; set; }
     }
 
     public class VoidResponseMessage : ResponseMessageBase
@@ -114,11 +118,15 @@ namespace LanguageServer
         public TError error { get; set; }
     }
 
-    public class VoidNotificationMessage : MethodCall
+    public abstract class NotificationMessageBase : MethodCall
     {
     }
 
-    public class NotificationMessage<T> : VoidNotificationMessage
+    public class VoidNotificationMessage : NotificationMessageBase
+    {
+    }
+
+    public class NotificationMessage<T> : NotificationMessageBase
     {
         public T @params { get; set; }
     }
