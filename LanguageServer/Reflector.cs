@@ -29,13 +29,13 @@ namespace LanguageServer
         private static readonly MethodInfo factoryForNotification
             = typeof(Reflector).GetTypeInfo().DeclaredMethods.FirstOrDefault(mi => mi.Name == nameof(ForNotification));
 
-        private static Action<object> ForNotification<TService, TRequest>(Connection connection, MethodInfo mi)
+        private static NotificationHandlerDelegate ForNotification<TService, TRequest>(MethodInfo mi)
             where TService : JsonRpcService, new()
             where TRequest : MethodCall
         {
             var deleType = typeof(Action<TService, TRequest>);
             var action = (Action<TService, TRequest>)mi.CreateDelegate(deleType);
-            return args =>
+            return (args, connection) =>
             {
                 var svc = new TService();
                 svc.Connection = connection;
