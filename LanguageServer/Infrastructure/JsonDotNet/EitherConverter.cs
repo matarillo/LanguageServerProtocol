@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace LanguageServer.Infrastructure.JsonDotNet
 {
-    public class EitherConverter : JsonConverter
+    internal class EitherConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

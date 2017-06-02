@@ -91,7 +91,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<TextEdit[], ResponseError>.Error(Error.InternalError());
+                r = Result<TextEdit[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<TextEdit[]>
             {
@@ -155,7 +155,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<ArrayOrObject<CompletionItem, CompletionList>, ResponseError>.Error(Error.InternalError());
+                r = Result<ArrayOrObject<CompletionItem, CompletionList>, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>>
             {
@@ -181,7 +181,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<CompletionItem, ResponseError>.Error(Error.InternalError());
+                r = Result<CompletionItem, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<CompletionItem>
             {
@@ -209,7 +209,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<Hover, ResponseError>.Error(Error.InternalError());
+                r = Result<Hover, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<Hover>
             {
@@ -237,7 +237,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<SignatureHelp, ResponseError>.Error(Error.InternalError());
+                r = Result<SignatureHelp, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<SignatureHelp>
             {
@@ -265,7 +265,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<Location[], ResponseError>.Error(Error.InternalError());
+                r = Result<Location[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<Location[]>
             {
@@ -293,7 +293,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<DocumentHighlight[], ResponseError>.Error(Error.InternalError());
+                r = Result<DocumentHighlight[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<DocumentHighlight[]>
             {
@@ -321,7 +321,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<SymbolInformation[], ResponseError>.Error(Error.InternalError());
+                r = Result<SymbolInformation[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<SymbolInformation[]>
             {
@@ -349,7 +349,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<TextEdit[], ResponseError>.Error(Error.InternalError());
+                r = Result<TextEdit[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<TextEdit[]>
             {
@@ -377,7 +377,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<TextEdit[], ResponseError>.Error(Error.InternalError());
+                r = Result<TextEdit[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<TextEdit[]>
             {
@@ -405,7 +405,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<TextEdit[], ResponseError>.Error(Error.InternalError());
+                r = Result<TextEdit[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<TextEdit[]>
             {
@@ -433,7 +433,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<ArrayOrObject<Location, Location>, ResponseError>.Error(Error.InternalError());
+                r = Result<ArrayOrObject<Location, Location>, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<ArrayOrObject<Location, Location>>
             {
@@ -461,7 +461,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<Command[], ResponseError>.Error(Error.InternalError());
+                r = Result<Command[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<Command[]>
             {
@@ -489,7 +489,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<CodeLens[], ResponseError>.Error(Error.InternalError());
+                r = Result<CodeLens[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<CodeLens[]>
             {
@@ -515,7 +515,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<CodeLens, ResponseError>.Error(Error.InternalError());
+                r = Result<CodeLens, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<CodeLens>
             {
@@ -543,7 +543,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<DocumentLink[], ResponseError>.Error(Error.InternalError());
+                r = Result<DocumentLink[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<DocumentLink[]>
             {
@@ -569,7 +569,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<DocumentLink, ResponseError>.Error(Error.InternalError());
+                r = Result<DocumentLink, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<DocumentLink>
             {
@@ -597,7 +597,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<WorkspaceEdit, ResponseError>.Error(Error.InternalError());
+                r = Result<WorkspaceEdit, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<WorkspaceEdit>
             {

@@ -32,7 +32,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<InitializeResult, ResponseError<InitializeErrorData>>.Error(Error.InternalError<InitializeErrorData>(null));
+                r = Result<InitializeResult, ResponseError<InitializeErrorData>>.Error(Message.InternalError<InitializeErrorData>(null));
             }
             return new ResponseMessage<InitializeResult, ResponseError<InitializeErrorData>>
             {
@@ -75,7 +75,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = VoidResult<ResponseError>.Error(Error.InternalError());
+                r = VoidResult<ResponseError>.Error(Message.InternalError());
             }
             return new VoidResponseMessage
             {

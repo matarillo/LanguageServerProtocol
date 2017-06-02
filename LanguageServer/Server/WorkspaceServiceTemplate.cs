@@ -72,7 +72,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<SymbolInformation[], ResponseError>.Error(Error.InternalError());
+                r = Result<SymbolInformation[], ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<SymbolInformation[]>
             {
@@ -100,7 +100,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<dynamic, ResponseError>.Error(Error.InternalError());
+                r = Result<dynamic, ResponseError>.Error(Message.InternalError());
             }
             return new ResponseMessage<dynamic>
             {
