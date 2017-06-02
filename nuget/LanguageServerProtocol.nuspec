@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>LanguageServerProtocol</id>
+        <version>1.0.1</version>
+        <title>LanguageServerProtocol</title>
+        <authors>Kentaro INOMATA</authors>
+        <owners>Kentaro INOMATA</owners>
+        <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+        <projectUrl>https://github.com/matarillo/LanguageServerProtocol</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A library to handle Language Server Protocol (https://github.com/Microsoft/language-server-protocol).</description>
+        <releaseNotes>v1.0.0: initial release.</releaseNotes>
+        <copyright>Copyright © 2017 INOMATA Kentaro</copyright>
+        <tags>LanguageServerProtocol language-server-protocol IDE compiler-service vscode omnisharp</tags>
+        <dependencies>
+            <dependency id="ProtocolReader " version="1.0.3" />
+            <dependency id="Newtonsoft.Json" version="10.0.2" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\LanguageServer\bin\Release\netstandard1.3\LanguageServer.deps.json" target="lib\netstandard1.3\LanguageServer.deps.json" />
+        <file src="..\LanguageServer\bin\Release\netstandard1.3\LanguageServer.dll" target="lib\netstandard1.3\LanguageServer.dll" />
+        <file src="..\LanguageServer\bin\Release\netstandard1.3\LanguageServer.pdb" target="lib\netstandard1.3\LanguageServer.pdb" />
+    </files>
+</package>
