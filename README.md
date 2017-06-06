@@ -2,6 +2,8 @@
 
 A library to handle [Language Server Protocol](https://github.com/Microsoft/language-server-protocol).
 
+A sample program is available at: [matarillo/vscode-languageserver-csharp-example](https://github.com/matarillo/vscode-languageserver-csharp-example)
+
 # Usage
 
 - Client to Server
