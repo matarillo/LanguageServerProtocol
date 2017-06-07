@@ -62,7 +62,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: void
         [JsonRpcMethod("workspace/symbol")]
-        public ResponseMessage<SymbolInformation[]> Symbol(RequestMessage<WorkspaceSymbolParams> request)
+        public ResponseMessage<SymbolInformation[], ResponseError> Symbol(RequestMessage<WorkspaceSymbolParams> request)
         {
             Result<SymbolInformation[], ResponseError> r;
             try
@@ -74,7 +74,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<SymbolInformation[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<SymbolInformation[]>
+            return new ResponseMessage<SymbolInformation[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -90,7 +90,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: ExecuteCommandRegistrationOptions
         [JsonRpcMethod("workspace/executeCommand")]
-        public ResponseMessage<dynamic> ExecuteCommand(RequestMessage<ExecuteCommandParams> request)
+        public ResponseMessage<dynamic, ResponseError> ExecuteCommand(RequestMessage<ExecuteCommandParams> request)
         {
             Result<dynamic, ResponseError> r;
             try
@@ -102,7 +102,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<dynamic, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<dynamic>
+            return new ResponseMessage<dynamic, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,

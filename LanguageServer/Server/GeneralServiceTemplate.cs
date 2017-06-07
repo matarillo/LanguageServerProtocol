@@ -32,7 +32,7 @@ namespace LanguageServer.Server
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                r = Result<InitializeResult, ResponseError<InitializeErrorData>>.Error(Message.InternalError<InitializeErrorData>(null));
+                r = Result<InitializeResult, ResponseError<InitializeErrorData>>.Error(Message.InternalError<ResponseError<InitializeErrorData>>());
             }
             return new ResponseMessage<InitializeResult, ResponseError<InitializeErrorData>>
             {
@@ -65,7 +65,7 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("shutdown")]
-        public VoidResponseMessage Shutdown(VoidRequestMessage request)
+        public VoidResponseMessage<ResponseError> Shutdown(VoidRequestMessage request)
         {
             VoidResult<ResponseError> r;
             try
@@ -77,7 +77,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = VoidResult<ResponseError>.Error(Message.InternalError());
             }
-            return new VoidResponseMessage
+            return new VoidResponseMessage<ResponseError>
             {
                 id = request.id,
                 error = r.ErrorValue

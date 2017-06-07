@@ -35,7 +35,7 @@ namespace LanguageServer.Client
                     method = "window/showMessageRequest",
                     @params = @params
                 },
-                (ResponseMessage<MessageActionItem> res) => tcs.TrySetResult(Message.ToResult(res)));
+                (ResponseMessage<MessageActionItem, ResponseError> res) => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
 

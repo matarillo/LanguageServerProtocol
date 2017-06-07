@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace LanguageServer
 {
-    internal class Handler
+    internal class Handlers
     {
         private readonly Dictionary<string, RequestHandler> requestHandlers = new Dictionary<string, RequestHandler>();
         private readonly SyncDictionary<NumberOrString, ResponseHandler> responseHandlers = new SyncDictionary<NumberOrString, ResponseHandler>();

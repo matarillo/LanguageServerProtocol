@@ -5,25 +5,15 @@ namespace LanguageServer
 {
     public static class Message
     {
-        public static Result<T, ResponseError> ToResult<T>(ResponseMessage<T> response)
-        {
-            throw new NotImplementedException();
-        }
-
         public static Result<T, TError> ToResult<T, TError>(ResponseMessage<T, TError> response)
             where TError : ResponseError
         {
-            throw new NotImplementedException();
-        }
-
-        public static VoidResult<ResponseError> ToResult(VoidResponseMessage response)
-        {
             return (response.error == null)
-                ? VoidResult<ResponseError>.Success()
-                : VoidResult<ResponseError>.Error(response.error);
+                ? Result<T, TError>.Success(response.result)
+                : Result<T, TError>.Error(response.error);
         }
 
-        public static VoidResult<TError> ToResult<T, TError>(VoidResponseMessage<TError> response)
+        public static VoidResult<TError> ToResult<TError>(VoidResponseMessage<TError> response)
             where TError : ResponseError
         {
             return (response.error == null)
@@ -43,6 +33,7 @@ namespace LanguageServer
         public static ResponseError InvalidParams() => new ResponseError { code = ErrorCodes.InvalidParams, message = "Invalid params" };
         public static ResponseError<T> InvalidParams<T>(T data) => new ResponseError<T> { code = ErrorCodes.InvalidParams, message = "Invalid params", data = data };
 
+        public static TResponseError InternalError<TResponseError>() where TResponseError : ResponseError, new() => new TResponseError { code = ErrorCodes.InternalError, message = "Internal error" };
         public static ResponseError InternalError() => new ResponseError { code = ErrorCodes.InternalError, message = "Internal error" };
         public static ResponseError<T> InternalError<T>(T data) => new ResponseError<T> { code = ErrorCodes.InternalError, message = "Internal error", data = data };
 
@@ -113,22 +104,10 @@ namespace LanguageServer
         public NumberOrString id { get; set; }
     }
 
-    public class VoidResponseMessage : ResponseMessageBase
-    {
-        public ResponseError error { get; set; }
-    }
-
     public class VoidResponseMessage<TError> : ResponseMessageBase
         where TError : ResponseError
     {
         public TError error { get; set; }
-    }
-
-    public class ResponseMessage<T> : ResponseMessageBase
-    {
-        public T result { get; set; }
-
-        public ResponseError error { get; set; }
     }
 
     public class ResponseMessage<T, TError> : ResponseMessageBase

@@ -19,7 +19,9 @@ namespace LanguageServer
         private readonly byte[] separator = { CR, LF };
         private Stream output;
         private readonly object outputLock = new object();
-        private readonly Handler handlers = new Handler();
+        private readonly Handlers handlers = new Handlers();
+
+        internal Handlers Handlers => handlers;
 
         public Connection(Stream input, Stream output)
         {
@@ -170,26 +172,6 @@ namespace LanguageServer
             }
             var contentBytes = await input.ReadBytesAsync(contentLength);
             return Encoding.UTF8.GetString(contentBytes);
-        }
-
-        public void RegisterHandlerMethods(Type[] serviceTypes)
-        {
-            var rpcType = typeof(JsonRpcService).GetTypeInfo();
-            if (serviceTypes.Any(x => !rpcType.IsAssignableFrom(x.GetTypeInfo())))
-            {
-                throw new ArgumentException("Specify types derived from JsonRpcService", nameof(serviceTypes));
-            }
-            foreach (var serviceType in serviceTypes)
-            {
-                RegisterHandlerMethods(serviceType);
-            }
-        }
-
-        public void RegisterHandlerMethods(Type serviceType)
-        {
-            var reflector = new Reflector(serviceType);
-            handlers.AddRequestHandlers(reflector.RequestHandlers);
-            handlers.AddNotificationHandlers(reflector.NotificationHandlers);
         }
     }
 }

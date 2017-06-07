@@ -81,7 +81,7 @@ namespace LanguageServer.Server
 
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/willSaveWaitUntil")]
-        public ResponseMessage<TextEdit[]> WillSaveWaitUntilTextDocument(RequestMessage<WillSaveTextDocumentParams> request)
+        public ResponseMessage<TextEdit[], ResponseError> WillSaveWaitUntilTextDocument(RequestMessage<WillSaveTextDocumentParams> request)
         {
             Result<TextEdit[], ResponseError> r;
             try
@@ -93,7 +93,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<TextEdit[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<TextEdit[]>
+            return new ResponseMessage<TextEdit[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -145,7 +145,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: CompletionRegistrationOptions
         [JsonRpcMethod("textDocument/completion")]
-        public ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>> Completion(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>, ResponseError> Completion(RequestMessage<TextDocumentPositionParams> request)
         {
             Result<ArrayOrObject<CompletionItem, CompletionList>, ResponseError> r;
             try
@@ -157,7 +157,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<ArrayOrObject<CompletionItem, CompletionList>, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>>
+            return new ResponseMessage<ArrayOrObject<CompletionItem, CompletionList>, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -171,7 +171,7 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("completionItem/resolve")]
-        public ResponseMessage<CompletionItem> ResolveCompletionItem(RequestMessage<CompletionItem> request)
+        public ResponseMessage<CompletionItem, ResponseError> ResolveCompletionItem(RequestMessage<CompletionItem> request)
         {
             Result<CompletionItem, ResponseError> r;
             try
@@ -183,7 +183,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<CompletionItem, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<CompletionItem>
+            return new ResponseMessage<CompletionItem, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -199,7 +199,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/hover")]
-        public ResponseMessage<Hover> Hover(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<Hover, ResponseError> Hover(RequestMessage<TextDocumentPositionParams> request)
         {
             Result<Hover, ResponseError> r;
             try
@@ -211,7 +211,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<Hover, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<Hover>
+            return new ResponseMessage<Hover, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -227,7 +227,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: SignatureHelpRegistrationOptions
         [JsonRpcMethod("textDocument/signatureHelp")]
-        public ResponseMessage<SignatureHelp> SignatureHelp(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<SignatureHelp, ResponseError> SignatureHelp(RequestMessage<TextDocumentPositionParams> request)
         {
             Result<SignatureHelp, ResponseError> r;
             try
@@ -239,7 +239,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<SignatureHelp, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<SignatureHelp>
+            return new ResponseMessage<SignatureHelp, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -255,7 +255,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/references")]
-        public ResponseMessage<Location[]> FindReferences(RequestMessage<ReferenceParams> request)
+        public ResponseMessage<Location[], ResponseError> FindReferences(RequestMessage<ReferenceParams> request)
         {
             Result<Location[], ResponseError> r;
             try
@@ -267,7 +267,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<Location[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<Location[]>
+            return new ResponseMessage<Location[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -283,7 +283,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/documentHighlight")]
-        public ResponseMessage<DocumentHighlight[]> DocumentHighlight(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<DocumentHighlight[], ResponseError> DocumentHighlight(RequestMessage<TextDocumentPositionParams> request)
         {
             Result<DocumentHighlight[], ResponseError> r;
             try
@@ -295,7 +295,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<DocumentHighlight[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<DocumentHighlight[]>
+            return new ResponseMessage<DocumentHighlight[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -311,7 +311,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/documentSymbol")]
-        public ResponseMessage<SymbolInformation[]> DocumentSymbols(RequestMessage<DocumentSymbolParams> request)
+        public ResponseMessage<SymbolInformation[], ResponseError> DocumentSymbols(RequestMessage<DocumentSymbolParams> request)
         {
             Result<SymbolInformation[], ResponseError> r;
             try
@@ -323,7 +323,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<SymbolInformation[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<SymbolInformation[]>
+            return new ResponseMessage<SymbolInformation[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -339,7 +339,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/formatting")]
-        public ResponseMessage<TextEdit[]> DocumentFormatting(RequestMessage<DocumentFormattingParams> request)
+        public ResponseMessage<TextEdit[], ResponseError> DocumentFormatting(RequestMessage<DocumentFormattingParams> request)
         {
             Result<TextEdit[], ResponseError> r;
             try
@@ -351,7 +351,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<TextEdit[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<TextEdit[]>
+            return new ResponseMessage<TextEdit[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -367,7 +367,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/rangeFormatting")]
-        public ResponseMessage<TextEdit[]> DocumentRangeFormatting(RequestMessage<DocumentRangeFormattingParams> request)
+        public ResponseMessage<TextEdit[], ResponseError> DocumentRangeFormatting(RequestMessage<DocumentRangeFormattingParams> request)
         {
             Result<TextEdit[], ResponseError> r;
             try
@@ -379,7 +379,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<TextEdit[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<TextEdit[]>
+            return new ResponseMessage<TextEdit[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -395,7 +395,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: DocumentOnTypeFormattingRegistrationOptions
         [JsonRpcMethod("textDocument/onTypeFormatting")]
-        public ResponseMessage<TextEdit[]> DocumentOnTypeFormatting(RequestMessage<DocumentOnTypeFormattingParams> request)
+        public ResponseMessage<TextEdit[], ResponseError> DocumentOnTypeFormatting(RequestMessage<DocumentOnTypeFormattingParams> request)
         {
             Result<TextEdit[], ResponseError> r;
             try
@@ -407,7 +407,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<TextEdit[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<TextEdit[]>
+            return new ResponseMessage<TextEdit[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -423,7 +423,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/definition")]
-        public ResponseMessage<ArrayOrObject<Location, Location>> GotoDefinition(RequestMessage<TextDocumentPositionParams> request)
+        public ResponseMessage<ArrayOrObject<Location, Location>, ResponseError> GotoDefinition(RequestMessage<TextDocumentPositionParams> request)
         {
             Result<ArrayOrObject<Location, Location>, ResponseError> r;
             try
@@ -435,7 +435,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<ArrayOrObject<Location, Location>, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<ArrayOrObject<Location, Location>>
+            return new ResponseMessage<ArrayOrObject<Location, Location>, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -451,7 +451,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/codeAction")]
-        public ResponseMessage<Command[]> CodeAction(RequestMessage<CodeActionParams> request)
+        public ResponseMessage<Command[], ResponseError> CodeAction(RequestMessage<CodeActionParams> request)
         {
             Result<Command[], ResponseError> r;
             try
@@ -463,7 +463,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<Command[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<Command[]>
+            return new ResponseMessage<Command[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -479,7 +479,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: CodeLensRegistrationOptions
         [JsonRpcMethod("textDocument/codeLens")]
-        public ResponseMessage<CodeLens[]> CodeLens(RequestMessage<CodeLensParams> request)
+        public ResponseMessage<CodeLens[], ResponseError> CodeLens(RequestMessage<CodeLensParams> request)
         {
             Result<CodeLens[], ResponseError> r;
             try
@@ -491,7 +491,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<CodeLens[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<CodeLens[]>
+            return new ResponseMessage<CodeLens[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -505,7 +505,7 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("codeLens/resolve")]
-        public ResponseMessage<CodeLens> ResolveCodeLens(RequestMessage<CodeLens> request)
+        public ResponseMessage<CodeLens, ResponseError> ResolveCodeLens(RequestMessage<CodeLens> request)
         {
             Result<CodeLens, ResponseError> r;
             try
@@ -517,7 +517,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<CodeLens, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<CodeLens>
+            return new ResponseMessage<CodeLens, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -533,7 +533,7 @@ namespace LanguageServer.Server
         // dynam0icRegistration?: boolean;
         // Registration Options: DocumentLinkRegistrationOptions
         [JsonRpcMethod("textDocument/documentLink")]
-        public ResponseMessage<DocumentLink[]> DocumentLink(RequestMessage<DocumentLinkParams> request)
+        public ResponseMessage<DocumentLink[], ResponseError> DocumentLink(RequestMessage<DocumentLinkParams> request)
         {
             Result<DocumentLink[], ResponseError> r;
             try
@@ -545,7 +545,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<DocumentLink[], ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<DocumentLink[]>
+            return new ResponseMessage<DocumentLink[], ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -559,7 +559,7 @@ namespace LanguageServer.Server
         }
 
         [JsonRpcMethod("documentLink/resolve")]
-        public ResponseMessage<DocumentLink> ResolveDocumentLink(RequestMessage<DocumentLink> request)
+        public ResponseMessage<DocumentLink, ResponseError> ResolveDocumentLink(RequestMessage<DocumentLink> request)
         {
             Result<DocumentLink, ResponseError> r;
             try
@@ -571,7 +571,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<DocumentLink, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<DocumentLink>
+            return new ResponseMessage<DocumentLink, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
@@ -587,7 +587,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/rename")]
-        public ResponseMessage<WorkspaceEdit> Rename(RequestMessage<RenameParams> request)
+        public ResponseMessage<WorkspaceEdit, ResponseError> Rename(RequestMessage<RenameParams> request)
         {
             Result<WorkspaceEdit, ResponseError> r;
             try
@@ -599,7 +599,7 @@ namespace LanguageServer.Server
                 Console.Error.WriteLine(ex);
                 r = Result<WorkspaceEdit, ResponseError>.Error(Message.InternalError());
             }
-            return new ResponseMessage<WorkspaceEdit>
+            return new ResponseMessage<WorkspaceEdit, ResponseError>
             {
                 id = request.id,
                 result = r.SuccessValue,
