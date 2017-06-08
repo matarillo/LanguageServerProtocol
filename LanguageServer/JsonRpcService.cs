@@ -21,17 +21,17 @@ namespace LanguageServer
             {
                 throw new ArgumentException("Specify types derived from JsonRpcService", nameof(serviceTypes));
             }
+            var provider = new ServiceHandlerProvider();
             foreach (var serviceType in serviceTypes)
             {
-                Register(connection, serviceType);
+                provider.AddHandlers(connection.Handlers, serviceType);
             }
         }
 
         public static void Register(Connection connection, Type serviceType)
         {
-            var reflector = new Reflector(serviceType);
-            connection.Handlers.AddRequestHandlers(reflector.RequestHandlers);
-            connection.Handlers.AddNotificationHandlers(reflector.NotificationHandlers);
+            var provider = new ServiceHandlerProvider();
+            provider.AddHandlers(connection.Handlers, serviceType);
         }
     }
 

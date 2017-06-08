@@ -43,7 +43,7 @@ namespace LanguageServer
         {
             var parameters = method.GetParameters();
             if (parameters.Length > 1) return false;
-            if (parameters[0].IsIn) return false;
+            if (parameters.Length == 1 && parameters[0].IsIn) return false;
             var retType = method.ReturnType;
             if (retType == typeof(void)) return false;
             var openRetType = retType.GetGenericTypeDefinition();
@@ -54,7 +54,7 @@ namespace LanguageServer
         {
             var parameters = method.GetParameters();
             if (parameters.Length > 1) return false;
-            if (parameters[0].IsIn) return false;
+            if (parameters.Length == 1 && parameters[0].IsIn) return false;
             var retType = method.ReturnType;
             return (retType == typeof(void));
         }
@@ -282,19 +282,15 @@ namespace LanguageServer
         {
             var serviceType = method.DeclaringType;
             var argTypes = method.GetParameters().Select(x => x.ParameterType).ToArray();
-            Type argType = null;
             if (argTypes.Length > 1)
             {
-                return null;
+                throw new ArgumentException($"signature mismatch: {method.Name}");
             }
-            else if (argTypes.Length == 1)
-            {
-                argType = argTypes[0];
-            }
+            Type argType = (argTypes.Length == 1) ? argTypes[0] : null;
             var returnType = method.ReturnType;
             var openReturnType = returnType.GetGenericTypeDefinition();
-            Type resultType = null;
-            Type responseErrorType = null;
+            Type resultType;
+            Type responseErrorType;
             if (openReturnType == typeof(Result<,>))
             {
                 resultType = returnType.GenericTypeArguments[0];
@@ -302,17 +298,17 @@ namespace LanguageServer
             }
             else if (returnType.GetGenericTypeDefinition() == typeof(VoidResult<>))
             {
+                resultType = null;
                 responseErrorType = returnType.GenericTypeArguments[0];
             }
-            var factory =
-                (argType != null && resultType != null && responseErrorType != null) ? GetFactoryForRequest4(method, serviceType, argType, resultType, responseErrorType) :
-                (argType == null && resultType != null && responseErrorType != null) ? GetFactoryForRequest3(method, serviceType, resultType, responseErrorType) :
-                (argType == null && resultType == null && responseErrorType != null) ? GetFactoryForRequest2(method, serviceType, responseErrorType) :
-                null;
-            if (factory == null)
+            else
             {
-                return null;
+                throw new ArgumentException($"signature mismatch: {method.Name}");
             }
+            var factory =
+                (argType != null && resultType != null) ? GetFactoryForRequest4(method, serviceType, argType, resultType, responseErrorType) :
+                (argType == null && resultType != null) ? GetFactoryForRequest3(method, serviceType, resultType, responseErrorType) :
+                GetFactoryForRequest2(method, serviceType, responseErrorType);
             return (RequestHandlerDelegate)factory.Invoke(null, new object[] { method });
         }
 
@@ -320,24 +316,17 @@ namespace LanguageServer
         {
             var serviceType = method.DeclaringType;
             var argTypes = method.GetParameters().Select(x => x.ParameterType).ToArray();
-            Type paramsType = null;
             if (argTypes.Length > 1)
             {
-                return null;
+                throw new ArgumentException($"signature mismatch: {method.Name}");
             }
-            else if (argTypes.Length == 1)
+            if (method.ReturnType != typeof(void))
             {
-                paramsType = argTypes[0];
+                throw new ArgumentException($"signature mismatch: {method.Name}");
             }
-            var returnType = method.ReturnType;
-            var factory =
-                (paramsType != null && returnType == null) ? GetFactoryForNotification2(method, serviceType, paramsType) :
-                (paramsType == null && returnType == null) ? GetFactoryForNotification1(method, serviceType) :
-                null;
-            if (factory == null)
-            {
-                return null;
-            }
+            var factory = (argTypes.Length == 1)
+                ? GetFactoryForNotification2(method, serviceType, argTypes[0])
+                : GetFactoryForNotification1(method, serviceType);
             return (NotificationHandlerDelegate)factory.Invoke(null, new object[] { method });
         }
     }
