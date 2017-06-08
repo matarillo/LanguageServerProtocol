@@ -18,7 +18,11 @@ namespace LanguageServer
         private readonly Proxy _proxy;
         public Proxy Proxy => _proxy;
         private AsyncLocal<CancellationToken> _token = new AsyncLocal<CancellationToken>();
-        public CancellationToken CancellationToken => _token.Value;
+        public CancellationToken CancellationToken
+        {
+            get => _token.Value;
+            internal set => _token.Value = value;
+        }
         private List<MethodInfo> _methods;
 
         protected ServiceConnection(Stream input, Stream output)
