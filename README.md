@@ -6,14 +6,7 @@ A sample program is available at: [matarillo/vscode-languageserver-csharp-exampl
 
 # Usage
 
-- Client to Server
-  - Define service classes derived from `LanguageServer.Server.GeneralServiceTemplate`, `LanguageServer.Server.WorkspaceServiceTemplate`, and `LanguageServer.Server.TextDocumentServiceTemplate`.
-  - Override virtual methods.
-
-- Server to Client
-  - Call methods of `LanguageServer.Client.ClientProxy`, `LanguageServer.Client.WindowProxy`, `LanguageServer.Client.WorkspaceProxy`, and `LanguageServer.Client.TextDocumentProxy` classes via service classes' `Proxy` property.
-
-- Run
-  - Create an instance of `LanguageServer.Connection` class.
-  - Register types of service classes via `Connection.RegisterHandlerMethods(Type[] serviceTypes)` instance method.
-  - Call `Connection.Start()` instance method.
+- Define a connection class derived from `LanguageServer.ServiceConnection`.
+- To handle messages from client to server, override virtual methods.
+- To handle messages from server to client, call methods of `LanguageServer.Client.ClientProxy`, `LanguageServer.Client.WindowProxy`, `LanguageServer.Client.WorkspaceProxy`, and `LanguageServer.Client.TextDocumentProxy` classes via `Proxy` property of the connection.
+- To start listening, call `Listen()` method of the connection.
