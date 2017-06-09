@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace LanguageServer
 {
-    public class JsonRpcService
+    public class Service
     {
         public virtual Connection Connection { get; set; }
 
@@ -16,7 +16,7 @@ namespace LanguageServer
 
         public static void Register(Connection connection, Type[] serviceTypes)
         {
-            var rpcType = typeof(JsonRpcService).GetTypeInfo();
+            var rpcType = typeof(Service).GetTypeInfo();
             if (serviceTypes.Any(x => !rpcType.IsAssignableFrom(x.GetTypeInfo())))
             {
                 throw new ArgumentException("Specify types derived from JsonRpcService", nameof(serviceTypes));
@@ -32,22 +32,6 @@ namespace LanguageServer
         {
             var provider = new ServiceHandlerProvider();
             provider.AddHandlers(connection.Handlers, serviceType);
-        }
-    }
-
-    [AttributeUsage(AttributeTargets.Method)]
-    public class JsonRpcMethodAttribute : Attribute
-    {
-        private string _method;
-
-        public JsonRpcMethodAttribute(string method)
-        {
-            _method = method;
-        }
-
-        public string Method
-        {
-            get => _method;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace LanguageServer
             this.output = output;
         }
 
-        public async Task Start()
+        public async Task Listen()
         {
             while (await ReadAndHandle())
             {

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace LanguageServer.Server
 {
-    public class WorkspaceServiceTemplate : JsonRpcService
+    public class WorkspaceServiceTemplate : Service
     {
         private Proxy _proxy;
 

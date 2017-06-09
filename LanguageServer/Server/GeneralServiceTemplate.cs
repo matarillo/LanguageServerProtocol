@@ -4,7 +4,7 @@ using System;
 
 namespace LanguageServer.Server
 {
-    public class GeneralServiceTemplate : JsonRpcService
+    public class GeneralServiceTemplate : Service
     {
         private Proxy _proxy;
 
