@@ -4,7 +4,15 @@ A library to handle [Language Server Protocol](https://github.com/Microsoft/lang
 
 A sample program is available at: [matarillo/vscode-languageserver-csharp-example](https://github.com/matarillo/vscode-languageserver-csharp-example)
 
-# Usage
+## Installation
+
+[NuGet Package](https://www.nuget.org/packages/LanguageServerProtocol/) is available. Run the following command in [NuGet Package Manager Console](https://docs.microsoft.com/ja-jp/nuget/tools/package-manager-console).
+
+```
+PM> Install-Package LanguageServerProtocol
+```
+
+## Usage
 
 - Define a connection class derived from `LanguageServer.ServiceConnection`.
 - To handle messages from client to server, override virtual methods.
