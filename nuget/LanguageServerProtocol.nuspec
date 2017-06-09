@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>LanguageServerProtocol</id>
-        <version>1.0.2</version>
+        <version>2.0.0</version>
         <title>LanguageServerProtocol</title>
         <authors>Kentaro INOMATA</authors>
         <owners>Kentaro INOMATA</owners>
@@ -10,7 +10,7 @@
         <projectUrl>https://github.com/matarillo/LanguageServerProtocol</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A library to handle Language Server Protocol (https://github.com/Microsoft/language-server-protocol).</description>
-        <releaseNotes>v1.0.0: initial release.</releaseNotes>
+        <releaseNotes>v2.0.0: Add ServiceConnection.#xD#xAv1.0.0: initial release.</releaseNotes>
         <copyright>Copyright © 2017 INOMATA Kentaro</copyright>
         <tags>LanguageServerProtocol language-server-protocol IDE compiler-service vscode omnisharp</tags>
         <dependencies>
