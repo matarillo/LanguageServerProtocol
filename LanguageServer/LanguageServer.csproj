@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
-    <PackageReference Include="ProtocolReader" Version="1.0.3" />
+    <PackageReference Include="Matarillo.IO" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
