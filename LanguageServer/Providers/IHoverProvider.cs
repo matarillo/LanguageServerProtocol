@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace LanguageServer.Providers
 {
+    /// <summary>
+    /// The hover provider interface defines the contract between extensions and
+    /// the [hover](https://code.visualstudio.com/docs/editor/intellisense)-feature.
+    /// </summary>
     interface IHoverProvider
     {
         /// <summary>

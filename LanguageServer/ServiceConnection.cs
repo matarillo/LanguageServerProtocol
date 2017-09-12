@@ -207,7 +207,7 @@ namespace LanguageServer
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/definition")]
-        protected virtual Result<ArrayOrObject<Location, Location>, ResponseError> GotoDefinition(TextDocumentPositionParams @params)
+        protected virtual Result<ArrayOrObject<Location>, ResponseError> GotoDefinition(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }

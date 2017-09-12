@@ -32,4 +32,33 @@ namespace LanguageServer.Json
                 EitherTag.None;
         }
     }
+
+    public sealed class ArrayOrObject<TElement> : Either<TElement[], TElement>
+    {
+        public static implicit operator ArrayOrObject<TElement>(TElement[] left)
+            => new ArrayOrObject<TElement>(left);
+
+        public static implicit operator ArrayOrObject<TElement>(TElement right)
+            => new ArrayOrObject<TElement>(right);
+
+        public ArrayOrObject()
+        {
+        }
+
+        public ArrayOrObject(TElement[] left) : base(left)
+        {
+        }
+
+        public ArrayOrObject(TElement right) : base(right)
+        {
+        }
+
+        protected override EitherTag OnDeserializing(JsonDataType jsonType)
+        {
+            return
+                (jsonType == JsonDataType.Array) ? EitherTag.Left :
+                (jsonType == JsonDataType.Object) ? EitherTag.Right :
+                EitherTag.None;
+        }
+    }
 }

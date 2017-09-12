@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace LanguageServer.Providers
 {
     /// <summary>
-    /// The document symbol provider interface defines the contract between extensions and the
-    /// [go to symbol](https://code.visualstudio.com/docs/editor/editingevolved#_go-to-symbol)-feature.
+    /// The document symbol provider interface defines the contract between extensions and
+    /// the [go to symbol](https://code.visualstudio.com/docs/editor/editingevolved#_go-to-symbol)-feature.
     /// </summary>
     interface IDocumentSymbolProvider
     {
