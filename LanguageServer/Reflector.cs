@@ -280,5 +280,16 @@ namespace LanguageServer
                 : GetFactoryForNotification1(method, declaringType);
             return (NotificationHandlerDelegate)factory.Invoke(provider, new object[] { targetType, method, provider });
         }
+
+        internal static ResponseMessageBase CreateErrorResponse(Type responseType, string errorMessage)
+        {
+            var res = (ResponseMessageBase)Activator.CreateInstance(responseType);
+            var prop = responseType.GetRuntimeProperty("error");
+            var err = (ResponseError)Activator.CreateInstance(prop.PropertyType);
+            err.code = ErrorCodes.InternalError;
+            err.message = errorMessage;
+            prop.SetValue(res, err);
+            return res;
+        }
     }
 }

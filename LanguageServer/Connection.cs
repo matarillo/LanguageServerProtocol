@@ -67,13 +67,22 @@ namespace LanguageServer
         {
             if (handlers.TryGetRequestHandler(method, out var handler))
             {
-                var tokenSource = new CancellationTokenSource();
-                handlers.AddCancellationTokenSource(id, tokenSource);
-                var request = Serializer.Instance.Deserialize(handler.RequestType, json);
-                var requestResponse = (ResponseMessageBase)handler.Handle(request, this, tokenSource.Token);
-                handlers.RemoveCancellationTokenSource(id);
-                requestResponse.id = id;
-                SendMessage(requestResponse);
+                try
+                {
+                    var tokenSource = new CancellationTokenSource();
+                    handlers.AddCancellationTokenSource(id, tokenSource);
+                    var request = Serializer.Instance.Deserialize(handler.RequestType, json);
+                    var requestResponse = (ResponseMessageBase)handler.Handle(request, this, tokenSource.Token);
+                    handlers.RemoveCancellationTokenSource(id);
+                    requestResponse.id = id;
+                    SendMessage(requestResponse);
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex);
+                    var requestErrorResponse = Reflector.CreateErrorResponse(handler.ResponseType, ex.ToString());
+                    SendMessage(requestErrorResponse);
+                }
             }
         }
 
