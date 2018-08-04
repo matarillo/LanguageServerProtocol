@@ -31,8 +31,20 @@ namespace LanguageServer
 
         public async Task Listen()
         {
-            while (await ReadAndHandle())
+            while (true)
             {
+                try
+                {
+                    var success = await ReadAndHandle();
+                    if (!success)
+                    {
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex);
+                }
             }
         }
 
@@ -84,6 +96,10 @@ namespace LanguageServer
                     SendMessage(requestErrorResponse);
                 }
             }
+            else
+            {
+                Console.Error.WriteLine("WARN: server does not support a request '" + method + "'");
+            }
         }
 
         private void HandleResponse(NumberOrString id, string json)
@@ -92,6 +108,11 @@ namespace LanguageServer
             {
                 var response = Serializer.Instance.Deserialize(handler.ResponseType, json);
                 handler.Handle(response);
+            }
+            else
+            {
+                var idString = (id.IsLeft) ? id.Left.ToString() : id.Right;
+                Console.Error.WriteLine("WARN: server does not expect a response to '" + idString + "'");
             }
         }
 
@@ -103,6 +124,11 @@ namespace LanguageServer
             {
                 tokenSource.Cancel();
             }
+            else
+            {
+                var idString = (id.IsLeft) ? id.Left.ToString() : id.Right;
+                Console.Error.WriteLine("WARN: server can not cancel a procedure '" + idString + "'");
+            }
         }
 
         private void HandleNotification(string method, string json)
@@ -111,6 +137,10 @@ namespace LanguageServer
             {
                 var notification = Serializer.Instance.Deserialize(handler.NotificationType, json);
                 handler.Handle(notification, this);
+            }
+            else
+            {
+                Console.Error.WriteLine("WARN: server does not support a notification '" + method + "'");
             }
         }
 
