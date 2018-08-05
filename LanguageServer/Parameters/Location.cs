@@ -6,7 +6,7 @@ namespace LanguageServer.Parameters
 {
     public class Location
     {
-        public Uri Uri { get; set; }
+        public Uri uri { get; set; }
         public Range range { get; set; }
     }
 }
