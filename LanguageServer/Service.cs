@@ -24,14 +24,14 @@ namespace LanguageServer
             var provider = new ServiceHandlerProvider();
             foreach (var serviceType in serviceTypes)
             {
-                provider.AddHandlers(connection.Handlers, serviceType);
+                provider.AddHandlers(connection.RequestHandlers, connection.NotificationHandlers, serviceType);
             }
         }
 
         public static void Register(Connection connection, Type serviceType)
         {
             var provider = new ServiceHandlerProvider();
-            provider.AddHandlers(connection.Handlers, serviceType);
+            provider.AddHandlers(connection.RequestHandlers, connection.NotificationHandlers, serviceType);
         }
     }
 }

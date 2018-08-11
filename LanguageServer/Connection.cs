@@ -19,9 +19,11 @@ namespace LanguageServer
         private readonly byte[] separator = { CR, LF };
         private Stream output;
         private readonly object outputLock = new object();
-        private readonly Handlers handlers = new Handlers();
 
-        internal Handlers Handlers => handlers;
+        public RequestHandlerCollection RequestHandlers { get; } = new RequestHandlerCollection();
+        public NotificationHandlerCollection NotificationHandlers { get; } = new NotificationHandlerCollection();
+        private ResponseHandlerCollection ResponseHandlers { get; } = new ResponseHandlerCollection();
+        private CancellationHandlerCollection CancellationHandlers { get; } = new CancellationHandlerCollection();
 
         public Connection(Stream input, Stream output)
         {
@@ -77,15 +79,15 @@ namespace LanguageServer
 
         private void HandleRequest(string method, NumberOrString id, string json)
         {
-            if (handlers.TryGetRequestHandler(method, out var handler))
+            if (RequestHandlers.TryGetRequestHandler(method, out var handler))
             {
                 try
                 {
                     var tokenSource = new CancellationTokenSource();
-                    handlers.AddCancellationTokenSource(id, tokenSource);
+                    CancellationHandlers.AddCancellationTokenSource(id, tokenSource);
                     var request = Serializer.Instance.Deserialize(handler.RequestType, json);
                     var requestResponse = (ResponseMessageBase)handler.Handle(request, this, tokenSource.Token);
-                    handlers.RemoveCancellationTokenSource(id);
+                    CancellationHandlers.RemoveCancellationTokenSource(id);
                     requestResponse.id = id;
                     SendMessage(requestResponse);
                 }
@@ -104,7 +106,7 @@ namespace LanguageServer
 
         private void HandleResponse(NumberOrString id, string json)
         {
-            if (handlers.TryRemoveResponseHandler(id, out var handler))
+            if (ResponseHandlers.TryRemoveResponseHandler(id, out var handler))
             {
                 var response = Serializer.Instance.Deserialize(handler.ResponseType, json);
                 handler.Handle(response);
@@ -120,7 +122,7 @@ namespace LanguageServer
         {
             var cancellation = (NotificationMessage<CancelParams>)Serializer.Instance.Deserialize(typeof(NotificationMessage<CancelParams>), json);
             var id = cancellation.@params.id;
-            if (handlers.TryRemoveCancellationTokenSource(id, out var tokenSource))
+            if (CancellationHandlers.TryRemoveCancellationTokenSource(id, out var tokenSource))
             {
                 tokenSource.Cancel();
             }
@@ -133,7 +135,7 @@ namespace LanguageServer
 
         private void HandleNotification(string method, string json)
         {
-            if (handlers.TryGetNotificationHandler(method, out var handler))
+            if (NotificationHandlers.TryGetNotificationHandler(method, out var handler))
             {
                 var notification = Serializer.Instance.Deserialize(handler.NotificationType, json);
                 handler.Handle(notification, this);
@@ -149,7 +151,7 @@ namespace LanguageServer
             where TResponse : ResponseMessageBase
         {
             var handler = new ResponseHandler(request.id, typeof(TResponse), o => responseHandler((TResponse)o));
-            handlers.AddResponseHandler(handler);
+            ResponseHandlers.AddResponseHandler(handler);
             SendMessage(request);
         }
 

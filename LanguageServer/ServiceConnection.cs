@@ -26,7 +26,7 @@ namespace LanguageServer
         {
             _proxy = new Proxy(this);
             var provider = new ConnectionHandlerProvider();
-            provider.AddHandlers(Handlers, this.GetType());
+            provider.AddHandlers(RequestHandlers, NotificationHandlers, this.GetType());
         }
 
         #region General

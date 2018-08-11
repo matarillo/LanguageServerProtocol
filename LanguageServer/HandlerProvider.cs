@@ -6,7 +6,7 @@ namespace LanguageServer
 {
     internal abstract class HandlerProvider
     {
-        internal void AddHandlers(Handlers handlers, Type type)
+        internal void AddHandlers(RequestHandlerCollection requestHandlers, NotificationHandlerCollection notificationHandlers, Type type)
         {
             var methodCallType = typeof(MethodCall).GetTypeInfo();
             foreach (var method in type.GetRuntimeMethods())
@@ -14,24 +14,22 @@ namespace LanguageServer
                 var rpcMethod = method.GetCustomAttribute<JsonRpcMethodAttribute>()?.Method;
                 if (rpcMethod != null)
                 {
-                    AddHandler(handlers, type, method, rpcMethod);
+                    if (Reflector.IsRequestHandler(method))
+                    {
+                        var requestHandlerDelegate = Reflector.CreateRequestHandlerDelegate(type, method, this);
+                        var requestHandler = new RequestHandler(rpcMethod, Reflector.GetRequestType(method),
+                            Reflector.GetResponseType(method), requestHandlerDelegate);
+                        requestHandlers.AddRequestHandler(requestHandler);
+                    }
+                    else if (Reflector.IsNotificationHandler(method))
+                    {
+                        var notificationHandlerDelegate =
+                            Reflector.CreateNotificationHandlerDelegate(type, method, this);
+                        var notificationHandler = new NotificationHandler(rpcMethod,
+                            Reflector.GetNotificationType(method), notificationHandlerDelegate);
+                        notificationHandlers.AddNotificationHandler(notificationHandler);
+                    }
                 }
-            }
-        }
-
-        internal void AddHandler(Handlers handlers, Type type, MethodInfo method, string rpcMethod)
-        {
-            if (Reflector.IsRequestHandler(method))
-            {
-                var requestHandlerDelegate = Reflector.CreateRequestHandlerDelegate(type, method, this);
-                var requestHandler = new RequestHandler(rpcMethod, Reflector.GetRequestType(method), Reflector.GetResponseType(method), requestHandlerDelegate);
-                handlers.AddRequestHandler(requestHandler);
-            }
-            else if (Reflector.IsNotificationHandler(method))
-            {
-                var notificationHandlerDelegate = Reflector.CreateNotificationHandlerDelegate(type, method, this);
-                var notificationHandler = new NotificationHandler(rpcMethod, Reflector.GetNotificationType(method), notificationHandlerDelegate);
-                handlers.AddNotificationHandler(notificationHandler);
             }
         }
 
