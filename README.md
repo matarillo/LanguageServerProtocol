@@ -14,7 +14,13 @@ PM> Install-Package LanguageServerProtocol
 
 ## Usage
 
-- Define a connection class derived from `LanguageServer.ServiceConnection`.
-- To handle messages from client to server, override virtual methods.
+`LanguageServer.Connection` is available.
+
+- To handle messages from client to server, call `connection.RequestHandlers.Set` method and/or `connection.NotificationHandlers.Set` method to register handler methods.
 - To handle messages from server to client, call methods of `LanguageServer.Client.ClientProxy`, `LanguageServer.Client.WindowProxy`, `LanguageServer.Client.WorkspaceProxy`, and `LanguageServer.Client.TextDocumentProxy` classes via `Proxy` property of the connection.
 - To start listening, call `Listen()` method of the connection.
+
+For your convenience, `LanguageServer.ServiceConnection` is also available.
+
+- Define a connection class derived from `LanguageServer.ServiceConnection`.
+- To handle messages from client to server, override virtual methods.

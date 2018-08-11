@@ -4,8 +4,19 @@
     <TargetFramework>netstandard1.3</TargetFramework>
     <Description>A library to handle Language Server Protocol (https://github.com/Microsoft/language-server-protocol).</Description>
     <Company />
-    <Copyright>Copyright © 2017 INOMATA Kentaro</Copyright>
-    <AssemblyVersion>2.0.4.0</AssemblyVersion>
+    <Copyright>Copyright © 2018 Kentaro Inomata</Copyright>
+    <AssemblyVersion>2.0.5.0</AssemblyVersion>
+    <Authors>Kentaro Inomata</Authors>
+    <PackageId>LanguageServerProtocol</PackageId>
+    <Product>LanguageServerProtocol</Product>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/matarillo/LanguageServerProtocol</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/matarillo/LanguageServerProtocol.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>LanguageServerProtocol language-server-protocol IDE compiler-service vscode omnisharp</PackageTags>
+    <PackageReleaseNotes>v2.0.0: Add ServiceConnection.&#xD;&#xA;v1.0.0: initial release.</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>
