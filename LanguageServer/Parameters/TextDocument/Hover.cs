@@ -7,7 +7,11 @@ namespace LanguageServer.Parameters.TextDocument
 {
     public class Hover
     {
-        public ArrayOrObject<StringOrObject<MarkedString>, StringOrObject<MarkedString>> contents { get; set; }
+        /// <summary>
+        /// The hover's content
+        /// </summary>
+        /// <seealso>Spec 3.3.0</seealso>
+        public HoverContents contents { get; set; }
 
         public Range range { get; set; }
     }

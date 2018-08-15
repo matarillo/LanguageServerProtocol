@@ -10,7 +10,6 @@ namespace LanguageServer.Parameters.Client
 
         public string method { get; set; }
 
-        // TODO: TextDocumentRegistrationOptions type
-        public dynamic registerOptions { get; set; }
+        public RegistrationOptions registerOptions { get; set; }
     }
 }

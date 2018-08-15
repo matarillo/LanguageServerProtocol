@@ -1,36 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LanguageServer.Json
 {
-    public sealed class NumberOrString : Either<long, string>, IEquatable<NumberOrString>
+    public sealed class NumberOrString : Either, IEquatable<NumberOrString>
     {
-        public static implicit operator NumberOrString(long left) => new NumberOrString(left);
+        public static implicit operator NumberOrString(long value) => new NumberOrString(value);
 
-        public static implicit operator NumberOrString(string right) => new NumberOrString(right);
+        public static implicit operator NumberOrString(string value) => new NumberOrString(value);
 
-        public NumberOrString()
+        public NumberOrString(long value)
         {
+            Type = typeof(long);
+            Value = value;
         }
 
-        public NumberOrString(long left) : base(left)
+        public NumberOrString(string value)
         {
+            Type = typeof(string);
+            Value = value;
         }
 
-        public NumberOrString(string right) : base(right)
-        {
-        }
+        public bool IsLeft => Type == typeof(long);
 
-        protected override EitherTag OnDeserializing(JsonDataType jsonType)
-        {
-            return
-                (jsonType == JsonDataType.Number) ? EitherTag.Left :
-                (jsonType == JsonDataType.String) ? EitherTag.Right :
-                EitherTag.None;
-        }
+        public bool IsRight => Type == typeof(string);
+
+        public long Left => GetValue<long>();
+
+        public string Right => GetValue<string>();
 
         public override int GetHashCode() =>
             IsLeft ? Left.GetHashCode() :
@@ -39,8 +35,7 @@ namespace LanguageServer.Json
 
         public override bool Equals(object obj)
         {
-            var other = obj as NumberOrString;
-            return (other == null) ? false : Equals(other);
+            return (obj is NumberOrString other) && Equals(other);
         }
 
         public bool Equals(NumberOrString other) =>

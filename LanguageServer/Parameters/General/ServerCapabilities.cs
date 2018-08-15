@@ -4,7 +4,7 @@ namespace LanguageServer.Parameters.General
 {
     public class ServerCapabilities
     {
-        public NumberOrObject<TextDocumentSyncKind, TextDocumentSyncOptions> textDocumentSync { get; set; }
+        public TextDocumentSync textDocumentSync { get; set; }
 
         public bool? hoverProvider { get; set; }
 
