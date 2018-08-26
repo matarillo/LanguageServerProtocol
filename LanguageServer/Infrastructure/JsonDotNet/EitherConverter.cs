@@ -1,74 +1,146 @@
-﻿using LanguageServer.Json;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
+using LanguageServer.Json;
+using LanguageServer.Parameters;
+using LanguageServer.Parameters.General;
+using LanguageServer.Parameters.TextDocument;
 
 namespace LanguageServer.Infrastructure.JsonDotNet
 {
-    internal class EitherConverter : JsonConverter
+    public class EitherConverter : JsonConverter
     {
-        public override bool CanConvert(Type objectType)
+        private readonly Dictionary<Type, Func<JToken, object>> table;
+
+        public EitherConverter()
         {
-            return typeof(IEither).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            table = new Dictionary<Type, Func<JToken, object>>();
+            table[typeof(NumberOrString)] = token => (object)ToNumberOrString(token);
+            table[typeof(LocationSingleOrArray)] = token => (object)ToLocationSingleOrArray(token);
+            table[typeof(TextDocumentSync)] = token => (object)ToTextDocumentSync(token);
+            table[typeof(CompletionResult)] = token => (object)ToCompletionResult(token);
+            table[typeof(HoverContents)] = token => (object)ToHoverContents(token);
         }
 
-        private static JsonDataType Convert(JsonToken token)
+        public override bool CanConvert(Type objectType)
         {
-            switch (token)
-            {
-                case JsonToken.Null:
-                    return JsonDataType.Null;
-                case JsonToken.Boolean:
-                    return JsonDataType.Boolean;
-                case JsonToken.Float:
-                    return JsonDataType.Number;
-                case JsonToken.Integer:
-                    return JsonDataType.Number;
-                case JsonToken.String:
-                    return JsonDataType.String;
-                case JsonToken.StartArray:
-                    return JsonDataType.Array;
-                case JsonToken.StartObject:
-                    return JsonDataType.Object;
-                default:
-                    return default(JsonDataType);
-            }
+            return typeof(Either).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var either = Activator.CreateInstance(objectType) as IEither;
-            var jsonType = Convert(reader.TokenType);
-            var tag = either.OnDeserializing(jsonType);
-            if (tag == EitherTag.Left)
-            {
-                var left = serializer.Deserialize(reader, either.LeftType);
-                either.Left = left;
-                return either;
-            }
-            else if (tag == EitherTag.Right)
-            {
-                var right = serializer.Deserialize(reader, either.RightType);
-                either.Right = right;
-                return either;
-            }
-            return null;
+            var convert = table[objectType] ??
+                          throw new NotImplementedException($"Could not deserialize '{objectType.FullName}'.");
+            var token = JToken.Load(reader);
+            return convert(token);
         }
+
+        #region Deserialization
+
+        private NumberOrString ToNumberOrString(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Integer:
+                    return new NumberOrString(token.ToObject<long>());
+                case JTokenType.String:
+                    return new NumberOrString(token.ToObject<string>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private LocationSingleOrArray ToLocationSingleOrArray(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Object:
+                    return new LocationSingleOrArray(token.ToObject<Location>());
+                case JTokenType.Array:
+                    return new LocationSingleOrArray(token.ToObject<Location[]>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private TextDocumentSync ToTextDocumentSync(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Integer:
+                    return new TextDocumentSync(token.ToObject<TextDocumentSyncKind>());
+                case JTokenType.Object:
+                    return new TextDocumentSync(token.ToObject<TextDocumentSyncOptions>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private CompletionResult ToCompletionResult(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Array:
+                    return new CompletionResult(token.ToObject<CompletionItem[]>());
+                case JTokenType.Object:
+                    return new CompletionResult(token.ToObject<CompletionList>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private HoverContents ToHoverContents(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.String:
+                    return new HoverContents(token.ToObject<string>());
+                case JTokenType.Object:
+                    return new HoverContents(token.ToObject<MarkedString>());
+                case JTokenType.Array:
+                    var array = (JArray) token;
+                    if (array.Count == 0)
+                    {
+                        return new HoverContents(new string[0]);
+                    }
+
+                    var element = (array[0] as JObject) ?? throw new JsonSerializationException();
+                    if (element.Type == JTokenType.String)
+                    {
+                        return new HoverContents(array.ToObject<string[]>());
+                    }
+                    else if (element.Type == JTokenType.Object)
+                    {
+                        return new HoverContents(array.ToObject<MarkedString[]>());
+                    }
+                    else
+                    {
+                        throw new JsonSerializationException();
+                    }
+
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+        
+        #endregion
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var either = value as IEither;
-            if (either == null)
-            {
-                return;
-            }
-            var objectValue = (either.IsLeft) ? either.Left : (either.IsRight) ? either.Right : null;
-            if (objectValue == null)
-            {
-                return;
-            }
-            JToken.FromObject(objectValue, serializer).WriteTo(writer);
+            var either = (Either)value;
+            serializer.Serialize(writer, either?.Value);
         }
     }
 }

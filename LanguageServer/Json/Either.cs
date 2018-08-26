@@ -1,67 +1,33 @@
 ﻿using System;
-using System.Linq;
-using System.Reflection;
 
 namespace LanguageServer.Json
 {
-    public abstract class Either<TLeft, TRight> : IEither
+    /// <summary>
+    /// Mimic discriminated union types
+    /// </summary>
+    /// <remarks>
+    /// <see cref="Serializer"/> must support these derived types below:
+    /// <list type="bullet">
+    /// <item><description><see cref="NumberOrString"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.LocationSingleOrArray"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.General.ChangeNotifications"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.General.ColorProviderCapabilities"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.General.FoldingRangeProviderCapabilities"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.General.ProviderCapabilities"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.General.TextDocumentSync"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.TextDocument.CodeActionResult"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.TextDocument.CompletionItemDocumentation"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.TextDocument.CompletionResult"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.TextDocument.DocumentSymbolResult"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.TextDocument.HoverContents"/></description></item>
+    /// </list>
+    /// </remarks>
+    public abstract class Either
     {
-        private EitherTag _tag;
-        private TLeft _left;
-        private TRight _right;
+        public object Value { get; protected set; }
 
-        public Either()
-        {
-        }
+        public Type Type { get; protected set; }
 
-        public Either(TLeft left)
-        {
-            _tag = EitherTag.Left;
-            _left = left;
-        }
-
-        public Either(TRight right)
-        {
-            _tag = EitherTag.Right;
-            _right = right;
-        }
-
-        public bool IsLeft => _tag == EitherTag.Left;
-
-        public bool IsRight => _tag == EitherTag.Right;
-
-        public TLeft Left => _tag == EitherTag.Left ? _left : throw new InvalidOperationException();
-
-        public TRight Right => _tag == EitherTag.Right ? _right : throw new InvalidOperationException();
-
-        public Type LeftType => typeof(TLeft);
-
-        public Type RightType => typeof(TRight);
-
-        protected abstract EitherTag OnDeserializing(JsonDataType jsonType);
-
-        object IEither.Left
-        {
-            get => this.Left;
-            set
-            {
-                _tag = EitherTag.Left;
-                _left = (TLeft)value;
-                _right = default(TRight);
-            }
-        }
-
-        object IEither.Right
-        {
-            get => this.Right;
-            set
-            {
-                _tag = EitherTag.Right;
-                _left = default(TLeft);
-                _right = (TRight)value;
-            }
-        }
-
-        EitherTag IEither.OnDeserializing(JsonDataType jsonType) => this.OnDeserializing(jsonType);
+        public T GetValue<T>() => (this.Type == typeof(T)) ? (T)Value : throw new InvalidOperationException();
     }
 }

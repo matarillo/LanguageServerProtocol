@@ -65,7 +65,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: CompletionRegistrationOptions
         [JsonRpcMethod("textDocument/completion")]
-        protected virtual Result<ArrayOrObject<CompletionItem, CompletionList>, ResponseError> Completion(TextDocumentPositionParams @params)
+        protected virtual Result<CompletionResult, ResponseError> Completion(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }
@@ -143,7 +143,7 @@ namespace LanguageServer.Server
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/definition")]
-        protected virtual Result<ArrayOrObject<Location, Location>, ResponseError> GotoDefinition(TextDocumentPositionParams @params)
+        protected virtual Result<LocationSingleOrArray, ResponseError> GotoDefinition(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }

@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <Description>A library to handle Language Server Protocol (https://github.com/Microsoft/language-server-protocol).</Description>
     <Company />
     <Copyright>Copyright © 2018 Kentaro Inomata</Copyright>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <Authors>Kentaro Inomata</Authors>
     <PackageId>LanguageServerProtocol</PackageId>
     <Product>LanguageServerProtocol</Product>
@@ -14,16 +13,21 @@
     <RepositoryUrl>https://github.com/matarillo/LanguageServerProtocol.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>LanguageServerProtocol language-server-protocol IDE compiler-service vscode omnisharp</PackageTags>
-    <PackageReleaseNotes>v2.1.0: Add Connection.ReuestHandlers and Connection.NotificationHandlers public properties.
+    <PackageReleaseNotes>v3.0.0: Make breaking changes to some types, such as removing, moving to another namespace, etc.
+v2.1.0: Add Connection.ReuestHandlers and Connection.NotificationHandlers public properties.
 v2.0.0: Add ServiceConnection.
 v1.0.0: initial release.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.1.0</Version>
+    <Version>3.0.0</Version>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.3\LanguageServer.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.3\LanguageServer.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
     <PackageReference Include="Matarillo.IO" Version="1.0.0" />
   </ItemGroup>
-
 </Project>
