@@ -4,6 +4,9 @@ using System.Text;
 
 namespace LanguageServer.Client
 {
+    /// <summary>
+    /// The proxy class for sending messages from the server to the client.
+    /// </summary>
     public sealed class Proxy
     {
         private Connection _connection;
@@ -12,11 +15,18 @@ namespace LanguageServer.Client
         private WorkspaceProxy _workspace;
         private TextDocumentProxy _textDocument;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Proxy"/>.
+        /// </summary>
+        /// <param name="connection"></param>
         public Proxy(Connection connection)
         {
             _connection = connection;
         }
 
+        /// <summary>
+        /// Gets the proxy object for sending messages related to <c>window</c>.
+        /// </summary>
         public WindowProxy Window
         {
             get
@@ -26,6 +36,9 @@ namespace LanguageServer.Client
             }
         }
 
+        /// <summary>
+        /// Gets the proxy object for sending messages related to <c>client</c>.
+        /// </summary>
         public ClientProxy Client
         {
             get
@@ -35,6 +48,9 @@ namespace LanguageServer.Client
             }
         }
 
+        /// <summary>
+        /// Gets the proxy object for sending messages related to <c>workspace</c>.
+        /// </summary>
         public WorkspaceProxy Workspace
         {
             get
@@ -44,6 +60,9 @@ namespace LanguageServer.Client
             }
         }
 
+        /// <summary>
+        /// Gets the proxy object for sending messages related to <c>textDocument</c>.
+        /// </summary>
         public TextDocumentProxy TextDocument
         {
             get

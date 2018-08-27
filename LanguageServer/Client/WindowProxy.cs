@@ -1,4 +1,4 @@
-﻿using LanguageServer.Parameters;
+﻿using LanguageServer.Parameters.Client;
 using LanguageServer.Parameters.Window;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LanguageServer.Client
 {
+    /// <summary>
+    /// The proxy class for sending messages related to <c>window</c>.
+    /// </summary>
     public sealed class WindowProxy
     {
         private readonly Connection _connection;
@@ -16,6 +19,11 @@ namespace LanguageServer.Client
             _connection = connection;
         }
 
+        /// <summary>
+        /// The <c>window/showMessage</c> notification is sent from the server to the client
+        /// to ask the client to display a particular message in the user interface.
+        /// </summary>
+        /// <param name="params"></param>
         public void ShowMessage(ShowMessageParams @params)
         {
             _connection.SendNotification(new NotificationMessage<ShowMessageParams>
@@ -25,6 +33,12 @@ namespace LanguageServer.Client
             });
         }
 
+        /// <summary>
+        /// The <c>window/showMessageRequest</c> request is sent from the server to the client
+        /// to ask the client to display a particular message in the user interface.
+        /// </summary>
+        /// <param name="params"></param>
+        /// <returns></returns>
         public Task<Result<MessageActionItem, ResponseError>> ShowMessageRequest(ShowMessageRequestParams @params)
         {
             var tcs = new TaskCompletionSource<Result<MessageActionItem, ResponseError>>();
@@ -39,6 +53,11 @@ namespace LanguageServer.Client
             return tcs.Task;
         }
 
+        /// <summary>
+        /// The <c>window/logMessage</c> notification is sent from the server to the client
+        /// to ask the client to log a particular message.
+        /// </summary>
+        /// <param name="params"></param>
         public void LogMessage(LogMessageParams @params)
         {
             _connection.SendNotification(new NotificationMessage<LogMessageParams>
@@ -48,6 +67,11 @@ namespace LanguageServer.Client
             });
         }
 
+        /// <summary>
+        /// The <c>telemetry/event</c> notification is sent from the server to the client
+        /// to ask the client to log a telemetry event.
+        /// </summary>
+        /// <param name="params"></param>
         public void Event(dynamic @params)
         {
             _connection.SendNotification(new NotificationMessage<dynamic>
