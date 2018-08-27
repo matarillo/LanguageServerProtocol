@@ -5,6 +5,9 @@
     /// </summary>
     public class EditCapabilities
     {
+        /// <summary>
+        /// The client supports versioned document changes in <c>WorkspaceEdit</c>s
+        /// </summary>
         public bool? documentChanges { get; set; }
     }
 }

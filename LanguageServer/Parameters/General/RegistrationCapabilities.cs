@@ -5,6 +5,9 @@
     /// </summary>
     public class RegistrationCapabilities
     {
+        /// <summary>
+        /// Whether the client supports dynamic registration.
+        /// </summary>
         public bool? dynamicRegistration { get; set; }
     }
 }
