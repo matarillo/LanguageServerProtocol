@@ -16,7 +16,7 @@ namespace LanguageServer.Json
     /// <item><description><see cref="LanguageServer.Parameters.General.ProviderCapabilities"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.General.TextDocumentSync"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.TextDocument.CodeActionResult"/></description></item>
-    /// <item><description><see cref="LanguageServer.Parameters.TextDocument.CompletionItemDocumentation"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.TextDocument.Documentation"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.TextDocument.CompletionResult"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.TextDocument.DocumentSymbolResult"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.TextDocument.HoverContents"/></description></item>

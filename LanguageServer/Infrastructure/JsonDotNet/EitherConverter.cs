@@ -10,25 +10,45 @@ using LanguageServer.Parameters.TextDocument;
 
 namespace LanguageServer.Infrastructure.JsonDotNet
 {
+    /// <summary>
+    /// Converts an Either-derived types to and from JSON.
+    /// </summary>
     public class EitherConverter : JsonConverter
     {
         private readonly Dictionary<Type, Func<JToken, object>> table;
 
+        /// <summary>
+        /// Initializes a new instance of the EitherConverter class.
+        /// </summary>
         public EitherConverter()
         {
             table = new Dictionary<Type, Func<JToken, object>>();
             table[typeof(NumberOrString)] = token => (object)ToNumberOrString(token);
             table[typeof(LocationSingleOrArray)] = token => (object)ToLocationSingleOrArray(token);
             table[typeof(TextDocumentSync)] = token => (object)ToTextDocumentSync(token);
+            table[typeof(Documentation)] = token => (object)ToDocumentation(token);
             table[typeof(CompletionResult)] = token => (object)ToCompletionResult(token);
             table[typeof(HoverContents)] = token => (object)ToHoverContents(token);
         }
 
+        /// <summary>
+        /// Determines whether this instance can convert the specified object type.
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
         public override bool CanConvert(Type objectType)
         {
             return typeof(Either).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
+        /// <summary>
+        /// Reads the JSON representation of the object.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="objectType"></param>
+        /// <param name="existingValue"></param>
+        /// <param name="serializer"></param>
+        /// <returns></returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var convert = table[objectType] ??
@@ -84,6 +104,21 @@ namespace LanguageServer.Infrastructure.JsonDotNet
             }
         }
 
+        private Documentation ToDocumentation(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.String:
+                    return new Documentation(token.ToObject<string>());
+                case JTokenType.Object:
+                    return new Documentation(token.ToObject<MarkupContent>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
         private CompletionResult ToCompletionResult(JToken token)
         {
             switch (token.Type)
@@ -108,9 +143,21 @@ namespace LanguageServer.Infrastructure.JsonDotNet
                 case JTokenType.String:
                     return new HoverContents(token.ToObject<string>());
                 case JTokenType.Object:
-                    return new HoverContents(token.ToObject<MarkedString>());
+                    var obj = (JObject)token;
+                    if (obj.Property("kind") != null)
+                    {
+                        return new HoverContents(obj.ToObject<MarkupContent>());
+                    }
+                    else if (obj.Property("language") != null)
+                    {
+                        return new HoverContents(obj.ToObject<MarkedString>());
+                    }
+                    else
+                    {
+                        throw new JsonSerializationException();
+                    }
                 case JTokenType.Array:
-                    var array = (JArray) token;
+                    var array = (JArray)token;
                     if (array.Count == 0)
                     {
                         return new HoverContents(new string[0]);
@@ -134,9 +181,15 @@ namespace LanguageServer.Infrastructure.JsonDotNet
                     throw new JsonSerializationException();
             }
         }
-        
+
         #endregion
 
+        /// <summary>
+        /// Writes the JSON representation of the object.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="value"></param>
+        /// <param name="serializer"></param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var either = (Either)value;
