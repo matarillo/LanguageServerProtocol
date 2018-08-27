@@ -16,14 +16,4 @@ namespace LanguageServer.Parameters.General
 
         public string trace { get; set; }
     }
-
-    public class InitializeResult
-    {
-        public ServerCapabilities capabilities { get; set; }
-    }
-
-    public class InitializeErrorData
-    {
-        public bool retry { get; set; }
-    }
 }
