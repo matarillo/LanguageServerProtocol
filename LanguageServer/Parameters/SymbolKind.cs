@@ -4,6 +4,12 @@ using System.Text;
 
 namespace LanguageServer.Parameters
 {
+    /// <summary>
+    /// For <c>textDocument/documentSymbol</c> and <c>workspace/symbol</c>
+    /// </summary>
+    /// <remarks>
+    /// A symbol kind.
+    /// </remarks>
     public enum SymbolKind
     {
         File = 1,

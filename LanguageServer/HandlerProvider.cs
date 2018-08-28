@@ -8,7 +8,6 @@ namespace LanguageServer
     {
         internal void AddHandlers(RequestHandlerCollection requestHandlers, NotificationHandlerCollection notificationHandlers, Type type)
         {
-            var methodCallType = typeof(MethodCall).GetTypeInfo();
             foreach (var method in type.GetRuntimeMethods())
             {
                 var rpcMethod = method.GetCustomAttribute<JsonRpcMethodAttribute>()?.Method;

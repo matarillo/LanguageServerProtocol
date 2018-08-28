@@ -195,7 +195,7 @@ namespace LanguageServer
             while (headerBytes.Length != 0)
             {
                 var headerLine = Encoding.ASCII.GetString(headerBytes);
-                var position = headerLine.IndexOf(": ");
+                var position = headerLine.IndexOf(": ", StringComparison.Ordinal);
                 if (position >= 0)
                 {
                     var name = headerLine.Substring(0, position);
