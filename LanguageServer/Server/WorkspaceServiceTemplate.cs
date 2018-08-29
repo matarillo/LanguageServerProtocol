@@ -23,6 +23,34 @@ namespace LanguageServer.Server
 
         public Proxy Proxy { get => _proxy; }
 
+        /// <summary>
+        /// The <c>workspace/didChangeWorkspaceFolders</c> notification is sent from the client
+        /// to the server to inform the server about workspace folder configuration changes. 
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The notification is sent by default if both <i>ServerCapabilities/workspace/workspaceFolders</i>
+        /// and <i>ClientCapabilities/workspace/workspaceFolders</i> are true;
+        /// or if the server has registered to receive this notification it first.
+        /// </para>
+        /// <para>
+        /// To register for the <c>workspace/didChangeWorkspaceFolders</c>
+        /// send a <c>client/registerCapability</c> request from the client to the server.
+        /// The registration parameter must have a registrations item of the following form,
+        /// where <c>id</c> is a unique id used to unregister the capability (the example uses a UUID):
+        /// </para>
+        /// <code><![CDATA[{
+        ///     id: "28c6150c-bd7b-11e7-abc4-cec278b6b50a",
+        ///     method: "workspace/didChangeWorkspaceFolders"
+        /// }]]></code>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <seealso>Spec 3.6.0</seealso>
+        [JsonRpcMethod("workspace/didChangeWorkspaceFolders")]
+        protected virtual void DidChangeWorkspaceFolders(DidChangeWorkspaceFoldersParams @params)
+        {
+        }
+
         // dynamicRegistration?: boolean;
         [JsonRpcMethod("workspace/didChangeConfiguration")]
         protected virtual void DidChangeConfiguration(DidChangeConfigurationParams @params)

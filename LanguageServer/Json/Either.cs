@@ -10,10 +10,10 @@ namespace LanguageServer.Json
     /// <list type="bullet">
     /// <item><description><see cref="NumberOrString"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.LocationSingleOrArray"/></description></item>
-    /// <item><description><see cref="LanguageServer.Parameters.General.ChangeNotifications"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.General.ChangeNotificationsOptions"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.General.ColorProviderCapabilities"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.General.FoldingRangeProviderCapabilities"/></description></item>
-    /// <item><description><see cref="LanguageServer.Parameters.General.ProviderCapabilities"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.General.ProviderOptionsOrBoolean"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.General.TextDocumentSync"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.TextDocument.CodeActionResult"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.TextDocument.Documentation"/></description></item>

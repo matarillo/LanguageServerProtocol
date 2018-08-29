@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LanguageServer.Parameters.Workspace;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -40,5 +41,16 @@ namespace LanguageServer.Parameters.General
         /// </value>
         /// <seealso cref="LanguageServer.Parameters.TraceKind"/>
         public string trace { get; set; }
+
+        /// <summary>
+        /// The workspace folders configured in the client when the server starts.
+        /// </summary>
+        /// <remarks>
+        /// This property is only available if the client supports workspace folders.
+        /// It can be <c>null</c> if the client supports workspace folders but none are
+        /// configured.
+        /// </remarks>
+        /// <seealso>Spec 3.6.0</seealso>
+        public WorkspaceFolder[] workspaceFolders { get; set; }
     }
 }
