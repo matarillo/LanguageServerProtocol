@@ -3,7 +3,7 @@
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
-    /// <seealso>Spec 3.7.0</seealso>
+    /// <seealso>Spec 3.8.0</seealso>
     public class TextDocumentClientCapabilities
     {
         /// <summary>
@@ -80,9 +80,10 @@
         public RegistrationCapabilities implementation { get; set; }
 
         /// <summary>
-        /// Capabilities specific to the <c>textDocument/codeAction</c>
+        /// Capabilities specific to the <c>textDocument/codeAction</c>.
         /// </summary>
-        public RegistrationCapabilities codeAction { get; set; }
+        /// <seealso>Spec 3.8.0</seealso>
+        public CodeActionCapabilities codeAction { get; set; }
 
         /// <summary>
         /// Capabilities specific to the <c>textDocument/codeLens</c>
