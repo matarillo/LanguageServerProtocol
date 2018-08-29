@@ -3,6 +3,7 @@
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
+    /// <seealso>Spec 3.4.0</seealso>
     public class WorkspaceClientCapabilities
     {
         /// <summary>
@@ -29,7 +30,8 @@
         /// <summary>
         /// Capabilities specific to the <c>workspace/symbol</c> request.
         /// </summary>
-        public RegistrationCapabilities symbol { get; set; }
+        /// <seealso>Spec 3.4.0</seealso>
+        public SymbolCapabilities symbol { get; set; }
 
         /// <summary>
         /// Capabilities specific to the <c>workspace/executeCommand</c> request.

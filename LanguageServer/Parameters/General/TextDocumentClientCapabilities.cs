@@ -3,7 +3,7 @@
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
-    /// <seealso>Spec 3.3.0</seealso>
+    /// <seealso>Spec 3.4.0</seealso>
     public class TextDocumentClientCapabilities
     {
         /// <summary>
@@ -42,7 +42,8 @@
         /// <summary>
         /// Capabilities specific to the <c>textDocument/documentSymbol</c>
         /// </summary>
-        public RegistrationCapabilities documentSymbol { get; set; }
+        /// <seealso>Spec 3.4.0</seealso>
+        public SymbolCapabilities documentSymbol { get; set; }
 
         /// <summary>
         /// Capabilities specific to the <c>textDocument/formatting</c>

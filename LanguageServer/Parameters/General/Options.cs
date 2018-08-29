@@ -5,7 +5,7 @@ using System.Text;
 namespace LanguageServer.Parameters.General
 {
     /// <summary>
-    /// For <c>Initialize</c>
+    /// For <c>initialize</c>
     /// </summary>
     /// <remarks>
     /// a detailed structure defining each notification.
@@ -35,7 +35,7 @@ namespace LanguageServer.Parameters.General
     }
 
     /// <summary>
-    /// For <c>Initialize</c>
+    /// For <c>initialize</c>
     /// </summary>
     /// <remarks>
     /// Save options.
@@ -49,7 +49,7 @@ namespace LanguageServer.Parameters.General
     }
 
     /// <summary>
-    /// For <c>Initialize</c>
+    /// For <c>initialize</c>
     /// </summary>
     /// <remarks>
     /// Completion options.
@@ -68,7 +68,7 @@ namespace LanguageServer.Parameters.General
     }
 
     /// <summary>
-    /// For <c>Initialize</c>
+    /// For <c>initialize</c>
     /// </summary>
     /// <remarks>
     /// Signature help options.
@@ -82,7 +82,7 @@ namespace LanguageServer.Parameters.General
     }
 
     /// <summary>
-    /// For <c>Initialize</c>
+    /// For <c>initialize</c>
     /// </summary>
     /// <remarks>
     /// Code Lens options.
@@ -96,7 +96,7 @@ namespace LanguageServer.Parameters.General
     }
 
     /// <summary>
-    /// For <c>Initialize</c>
+    /// For <c>initialize</c>
     /// </summary>
     /// <remarks>
     /// Format document on type options.
@@ -115,7 +115,7 @@ namespace LanguageServer.Parameters.General
     }
 
     /// <summary>
-    /// For <c>Initialize</c>
+    /// For <c>initialize</c>
     /// </summary>
     /// <remarks>
     /// Document link options.
@@ -129,7 +129,7 @@ namespace LanguageServer.Parameters.General
     }
 
     /// <summary>
-    /// For <c>Initialize</c>
+    /// For <c>initialize</c>
     /// </summary>
     /// <remarks>
     /// Execute command options.

@@ -7,6 +7,9 @@ namespace LanguageServer.Parameters.TextDocument
     /// <summary>
     /// For <c>textDocument/completion</c>
     /// </summary>
+    /// <remarks>
+    /// Contains additional information about the context in which a completion request is triggered.
+    /// </remarks>
     /// <seealso>Spec 3.3.0</seealso>
     public class CompletionContext
     {
