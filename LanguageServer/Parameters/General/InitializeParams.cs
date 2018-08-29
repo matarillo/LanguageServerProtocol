@@ -35,6 +35,10 @@ namespace LanguageServer.Parameters.General
         /// <remarks>
         /// If omitted trace is disabled ('off').
         /// </remarks>
+        /// <value>
+        /// See <see cref="LanguageServer.Parameters.TraceKind"/> for an enumeration of standardized kinds.
+        /// </value>
+        /// <seealso cref="LanguageServer.Parameters.TraceKind"/>
         public string trace { get; set; }
     }
 }
