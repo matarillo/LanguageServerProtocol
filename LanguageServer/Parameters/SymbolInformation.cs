@@ -7,6 +7,7 @@ namespace LanguageServer.Parameters
     /// <summary>
     /// For <c>textDocument/documentSymbol</c> and <c>workspace/symbol</c>
     /// </summary>
+    /// <seealso>Spec 3.7.2</seealso>
     public class SymbolInformation
     {
         /// <summary>
@@ -18,6 +19,12 @@ namespace LanguageServer.Parameters
         /// The kind of this symbol.
         /// </summary>
         public SymbolKind kind { get; set; }
+
+        /// <summary>
+        /// Indicates if this symbol is deprecated.
+        /// </summary>
+        /// <seealso>Spec 3.7.2</seealso>
+        public bool? deprecated { get; set; }
 
         /// <summary>
         /// The location of this symbol.

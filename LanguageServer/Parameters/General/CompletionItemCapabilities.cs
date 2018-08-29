@@ -3,7 +3,7 @@
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
-    /// <seealso>Spec 3.3.0</seealso>
+    /// <seealso>Spec 3.7.2</seealso>
     public class CompletionItemCapabilities
     {
         /// <summary>
@@ -34,5 +34,10 @@
         /// <seealso cref="LanguageServer.Parameters.MarkupKind"/>
         public string[] documentationFormat { get; set; }
 
+        /// <summary>
+        /// Client supports the deprecated property on a completion item.
+        /// </summary>
+        /// <seealso>Spec 3.7.2</seealso>
+        public bool? deprecatedSupport { get; set; }
     }
 }
