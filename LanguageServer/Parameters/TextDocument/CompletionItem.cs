@@ -7,7 +7,7 @@ namespace LanguageServer.Parameters.TextDocument
     /// <summary>
     /// For <c>textDocument/completion</c> and <c>completionItem/resolve</c>
     /// </summary>
-    /// <seealso>Spec 3.7.2</seealso>
+    /// <seealso>Spec 3.9.0</seealso>
     public class CompletionItem
     {
         /// <summary>
@@ -37,6 +37,16 @@ namespace LanguageServer.Parameters.TextDocument
         /// </summary>
         /// <seealso>Spec 3.7.2</seealso>
         public bool? deprecated { get; set; }
+
+        /// <summary>
+        /// Select this item when showing.
+        /// </summary>
+        /// <remarks>
+        /// Note that only one completion item can be selected and that the tool / client decides which item that is.
+        /// The rule is that the <b>first</b> item of those that match best is selected.
+        /// </remarks>
+        /// <seealso>Spec 3.9.0</seealso>
+        public bool? preselect { get; set; }
 
         /// <summary>
         /// A string that should be used when comparing this item with other items.
