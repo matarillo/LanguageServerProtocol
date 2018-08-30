@@ -24,3 +24,11 @@ For your convenience, `LanguageServer.ServiceConnection` is also available.
 
 - Define a connection class derived from `LanguageServer.ServiceConnection`.
 - To handle messages from client to server, override virtual methods.
+
+## Versioning
+
+This library roughly follows [SemVer](https://semver.org/), but its version is not synchronized with the protocol's.
+
+* Major - incremented when the release has breaking changes *at .NET/IL level*. Note that this may occur even if parameter types and/or return types are extended while keeping backward compatibility *at JS/TS level*.
+* Minor - incremented when the release has new non-breaking features.
+* Patch - incremented when other than those above.
