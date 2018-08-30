@@ -13,12 +13,14 @@ namespace LanguageServer.Parameters.TextDocument
         /// <summary>
         /// How the completion was triggered.
         /// </summary>
+        /// <seealso>Spec 3.3.0</seealso>
         public CompletionTriggerKind triggerKind { get; set; }
 
         /// <summary>
         /// The trigger character (a single character) that has trigger code complete.
         /// Is undefined if <c>triggerKind !== CompletionTriggerKind.TriggerCharacter</c>
         /// </summary>
+        /// <seealso>Spec 3.3.0</seealso>
         public string triggerCharacter { get; set; }
     }
 }

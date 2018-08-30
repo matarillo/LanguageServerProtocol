@@ -126,10 +126,33 @@ namespace LanguageServer
         {
         }
 
-        // dynamicRegistration?: boolean;
-        // Registration Options: CompletionRegistrationOptions
+        /// <summary>
+        /// The Completion request is sent from the client to the server to compute completion items at a given cursor position. 
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Completion items are presented in the <a href="https://code.visualstudio.com/docs/editor/editingevolved#_intellisense">IntelliSense</a> user interface.
+        /// If computing full completion items is expensive, servers can additionally provide a handler for the completion item resolve request (<c>completionItem/resolve</c>).
+        /// </para>
+        /// <para>
+        /// This request is sent when a completion item is selected in the user interface.
+        /// </para>
+        /// <para>
+        /// A typical use case is for example: the <c>textDocument/completion</c> request doesn’t fill
+        /// in the documentation property for returned completion items since it is expensive to compute.
+        /// When the item is selected in the user interface then a <c>completionItem/resolve</c> request
+        /// is sent with the selected completion item as a param.
+        /// </para>
+        /// <para>
+        /// Registration Options: <c>CompletionRegistrationOptions</c>
+        /// </para>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <returns></returns>
+        /// <seealso cref="LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+        /// <seealso>Spec 3.3.0</seealso>
         [JsonRpcMethod("textDocument/completion")]
-        protected virtual Result<CompletionResult, ResponseError> Completion(TextDocumentPositionParams @params)
+        protected virtual Result<CompletionResult, ResponseError> Completion(CompletionParams @params)
         {
             throw new NotImplementedException();
         }

@@ -3,6 +3,7 @@
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
+    /// <seealso>Spec 3.3.0</seealso>
     public class TextDocumentClientCapabilities
     {
         /// <summary>
@@ -19,12 +20,14 @@
         /// <summary>
         /// Capabilities specific to the <c>textDocument/hover</c>
         /// </summary>
-        public RegistrationCapabilities hover { get; set; }
+        /// <seealso>Spec 3.3.0</seealso>
+        public HoverCapabilities hover { get; set; }
 
         /// <summary>
         /// Capabilities specific to the <c>textDocument/signatureHelp</c>
         /// </summary>
-        public RegistrationCapabilities signatureHelp { get; set; }
+        /// <seealso>Spec 3.3.0</seealso>
+        public SignatureHelpCapabilities signatureHelp { get; set; }
 
         /// <summary>
         /// Capabilities specific to the <c>textDocument/references</c>
