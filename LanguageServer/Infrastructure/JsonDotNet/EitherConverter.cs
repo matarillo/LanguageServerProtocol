@@ -27,11 +27,13 @@ namespace LanguageServer.Infrastructure.JsonDotNet
             table[typeof(LocationSingleOrArray)] = token => (object)ToLocationSingleOrArray(token);
             table[typeof(ChangeNotificationsOptions)] = token => (object)ToChangeNotificationsOptions(token);
             table[typeof(ColorProviderOptionsOrBoolean)] = token => (object)ToColorProviderOptionsOrBoolean(token);
+            table[typeof(FoldingRangeProviderOptionsOrBoolean)] = token => (object)ToFoldingRangeProviderOptionsOrBoolean(token);
             table[typeof(ProviderOptionsOrBoolean)] = token => (object)ToProviderOptionsOrBoolean(token);
             table[typeof(TextDocumentSync)] = token => (object)ToTextDocumentSync(token);
             table[typeof(CodeActionResult)] = token => (object)ToCodeActionResult(token);
             table[typeof(Documentation)] = token => (object)ToDocumentation(token);
             table[typeof(CompletionResult)] = token => (object)ToCompletionResult(token);
+            table[typeof(DocumentSymbolResult)] = token => (object)ToDocumentSymbolResult(token);
             table[typeof(HoverContents)] = token => (object)ToHoverContents(token);
         }
 
@@ -118,6 +120,21 @@ namespace LanguageServer.Infrastructure.JsonDotNet
                     return new ColorProviderOptionsOrBoolean(token.ToObject<bool>());
                 case JTokenType.Object:
                     return new ColorProviderOptionsOrBoolean(token.ToObject<ColorProviderOptions>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private FoldingRangeProviderOptionsOrBoolean ToFoldingRangeProviderOptionsOrBoolean(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Boolean:
+                    return new FoldingRangeProviderOptionsOrBoolean(token.ToObject<bool>());
+                case JTokenType.Object:
+                    return new FoldingRangeProviderOptionsOrBoolean(token.ToObject<FoldingRangeProviderOptions>());
                 default:
                     throw new JsonSerializationException();
             }
@@ -215,6 +232,37 @@ namespace LanguageServer.Infrastructure.JsonDotNet
                     return new CompletionResult(token.ToObject<CompletionItem[]>());
                 case JTokenType.Object:
                     return new CompletionResult(token.ToObject<CompletionList>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private DocumentSymbolResult ToDocumentSymbolResult(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Array:
+                    var array = (JArray) token;
+                    if (array.Count == 0)
+                    {
+                        return new DocumentSymbolResult(new DocumentSymbol[0]);
+                    }
+
+                    var element = (array[0] as JObject) ?? throw new JsonSerializationException();
+                    if (element.Property("range") != null)
+                    {
+                        return new DocumentSymbolResult(array.ToObject<DocumentSymbol[]>());
+                    }
+                    else if (element.Property("location") != null)
+                    {
+                        return new DocumentSymbolResult(array.ToObject<SymbolInformation[]>());
+                    }
+                    else
+                    {
+                        throw new JsonSerializationException();
+                    }
                 default:
                     throw new JsonSerializationException();
             }
