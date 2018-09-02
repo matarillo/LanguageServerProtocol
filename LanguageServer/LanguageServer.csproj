@@ -4,7 +4,7 @@
     <Description>A library to handle Language Server Protocol (https://github.com/Microsoft/language-server-protocol).</Description>
     <Company />
     <Copyright>Copyright © 2018 Kentaro Inomata</Copyright>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
     <Authors>Kentaro Inomata</Authors>
     <PackageId>LanguageServerProtocol</PackageId>
     <Product>LanguageServerProtocol</Product>
@@ -13,13 +13,14 @@
     <RepositoryUrl>https://github.com/matarillo/LanguageServerProtocol.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>LanguageServerProtocol language-server-protocol IDE compiler-service vscode omnisharp</PackageTags>
-    <PackageReleaseNotes>v4.0.0: Support the protocol version 3.3.0.
+    <PackageReleaseNotes>v5.0.0: Support the protocol version 3.4.0.
+v4.0.0: Support the protocol version 3.3.0.
 v3.0.0: Make breaking changes to some types, such as removing, moving to another namespace, etc.
 v2.1.0: Support the protocol version 3.2.0.  Add Connection.ReuestHandlers and Connection.NotificationHandlers public properties.
 v2.0.0: Support the protocol version 3.0.0.  Add ServiceConnection.
 v1.0.0: initial release.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.0.0</Version>
+    <Version>5.0.0</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard1.3\LanguageServer.xml</DocumentationFile>
