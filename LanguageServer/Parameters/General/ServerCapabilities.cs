@@ -5,7 +5,7 @@ namespace LanguageServer.Parameters.General
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
-    /// <seealso>Spec 3.8.0</seealso>
+    /// <seealso>Spec 3.10.0</seealso>
     public class ServerCapabilities
     {
         /// <summary>
@@ -123,6 +123,12 @@ namespace LanguageServer.Parameters.General
         /// </summary>
         /// <seealso>Spec 3.8.0</seealso>
         public ColorProviderOptionsOrBoolean colorProvider { get; set; }
+
+        /// <summary>
+        /// The server provides folding provider support.
+        /// </summary>
+        /// <seealso>Spec 3.10.0</seealso>
+        public FoldingRangeProviderOptionsOrBoolean foldingRangeProvider { get; set; }
 
         /// <summary>
         /// The server provides execute command support.

@@ -223,10 +223,24 @@ namespace LanguageServer
             throw new NotImplementedException();
         }
 
-        // dynamicRegistration?: boolean;
-        // Registration Options: TextDocumentRegistrationOptions
+        /// <summary>
+        /// The document symbol request is sent from the client to the server
+        /// to return a flat list of all symbols found in a given text document.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Neither the symbol’s location range nor the symbol’s container name should be used to infer a hierarchy.
+        /// </para>
+        /// <para>
+        /// Registration Options: <c>TextDocumentRegistrationOptions</c>
+        /// </para>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <returns></returns>
+        /// <seealso cref="LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+        /// <seealso>Spec 3.10.0</seealso>
         [JsonRpcMethod("textDocument/documentSymbol")]
-        protected virtual Result<SymbolInformation[], ResponseError> DocumentSymbols(DocumentSymbolParams @params)
+        protected virtual Result<DocumentSymbolResult, ResponseError> DocumentSymbols(DocumentSymbolParams @params)
         {
             throw new NotImplementedException();
         }
@@ -426,6 +440,19 @@ namespace LanguageServer
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/rename")]
         protected virtual Result<WorkspaceEdit, ResponseError> Rename(RenameParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The folding range request is sent from the client to the server
+        /// to return all folding ranges found in a given text document.
+        /// </summary>
+        /// <param name="params"></param>
+        /// <returns></returns>
+        /// <seealso>Spec 3.10.0</seealso>
+        [JsonRpcMethod("textDocument/foldingRange")]
+        protected virtual Result<FoldingRange[], ResponseError> FoldingRange(FoldingRangeRequestParam @params)
         {
             throw new NotImplementedException();
         }
