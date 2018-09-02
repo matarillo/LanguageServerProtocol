@@ -5,6 +5,7 @@ namespace LanguageServer.Parameters.General
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
+    /// <seealso>Spec 3.8.0</seealso>
     public class ServerCapabilities
     {
         /// <summary>
@@ -77,7 +78,7 @@ namespace LanguageServer.Parameters.General
         /// The server provides code actions.
         /// </summary>
         /// <remarks>
-        /// The <c>CodeActionOptions</c> return type is only
+        /// The <c>CodeActionOptions</c> return type (since version 3.11.0) is only
         /// valid if the client signals code action literal support via the property
         /// <c>textDocument.codeAction.codeActionLiteralSupport</c>.
         /// </remarks>
@@ -120,8 +121,8 @@ namespace LanguageServer.Parameters.General
         /// <summary>
         /// The server provides color provider support.
         /// </summary>
-        /// <seealso>Spec 3.6.0</seealso>
-        public ColorProviderOptions colorProvider { get; set; }
+        /// <seealso>Spec 3.8.0</seealso>
+        public ColorProviderOptionsOrBoolean colorProvider { get; set; }
 
         /// <summary>
         /// The server provides execute command support.

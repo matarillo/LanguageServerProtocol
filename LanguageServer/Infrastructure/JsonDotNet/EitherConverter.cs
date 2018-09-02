@@ -26,8 +26,10 @@ namespace LanguageServer.Infrastructure.JsonDotNet
             table[typeof(NumberOrString)] = token => (object)ToNumberOrString(token);
             table[typeof(LocationSingleOrArray)] = token => (object)ToLocationSingleOrArray(token);
             table[typeof(ChangeNotificationsOptions)] = token => (object)ToChangeNotificationsOptions(token);
+            table[typeof(ColorProviderOptionsOrBoolean)] = token => (object)ToColorProviderOptionsOrBoolean(token);
             table[typeof(ProviderOptionsOrBoolean)] = token => (object)ToProviderOptionsOrBoolean(token);
             table[typeof(TextDocumentSync)] = token => (object)ToTextDocumentSync(token);
+            table[typeof(CodeActionResult)] = token => (object)ToCodeActionResult(token);
             table[typeof(Documentation)] = token => (object)ToDocumentation(token);
             table[typeof(CompletionResult)] = token => (object)ToCompletionResult(token);
             table[typeof(HoverContents)] = token => (object)ToHoverContents(token);
@@ -106,6 +108,21 @@ namespace LanguageServer.Infrastructure.JsonDotNet
             }
         }
 
+        private ColorProviderOptionsOrBoolean ToColorProviderOptionsOrBoolean(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Boolean:
+                    return new ColorProviderOptionsOrBoolean(token.ToObject<bool>());
+                case JTokenType.Object:
+                    return new ColorProviderOptionsOrBoolean(token.ToObject<ColorProviderOptions>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
         private ProviderOptionsOrBoolean ToProviderOptionsOrBoolean(JToken token)
         {
             switch (token.Type)
@@ -131,6 +148,43 @@ namespace LanguageServer.Infrastructure.JsonDotNet
                     return new TextDocumentSync(token.ToObject<TextDocumentSyncKind>());
                 case JTokenType.Object:
                     return new TextDocumentSync(token.ToObject<TextDocumentSyncOptions>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private CodeActionResult ToCodeActionResult(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Array:
+                    var array = (JArray) token;
+                    if (array.Count == 0)
+                    {
+                        return new CodeActionResult(new Command[0]);
+                    }
+
+                    var element = (array[0] as JObject) ?? throw new JsonSerializationException();
+                    if (element.Property("edit") != null)
+                    {
+                        return new CodeActionResult(array.ToObject<CodeAction[]>());
+                    }
+
+                    var command = element.Property("command") ?? throw new JsonSerializationException();
+                    if (command.Type == JTokenType.Object)
+                    {
+                        return new CodeActionResult(array.ToObject<CodeAction[]>());
+                    }
+                    else if (command.Type == JTokenType.String)
+                    {
+                        return new CodeActionResult(array.ToObject<Command[]>());
+                    }
+                    else
+                    {
+                        throw new JsonSerializationException();
+                    }
                 default:
                     throw new JsonSerializationException();
             }

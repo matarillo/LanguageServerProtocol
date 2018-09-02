@@ -11,7 +11,7 @@ namespace LanguageServer.Json
     /// <item><description><see cref="NumberOrString"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.LocationSingleOrArray"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.General.ChangeNotificationsOptions"/></description></item>
-    /// <item><description><see cref="LanguageServer.Parameters.General.ColorProviderCapabilities"/></description></item>
+    /// <item><description><see cref="LanguageServer.Parameters.General.ColorProviderOptionsOrBoolean"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.General.FoldingRangeProviderCapabilities"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.General.ProviderOptionsOrBoolean"/></description></item>
     /// <item><description><see cref="LanguageServer.Parameters.General.TextDocumentSync"/></description></item>
