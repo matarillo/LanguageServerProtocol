@@ -3,7 +3,7 @@
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
-    /// <seealso>Spec 3.4.0</seealso>
+    /// <seealso>Spec 3.7.0</seealso>
     public class TextDocumentClientCapabilities
     {
         /// <summary>
@@ -112,5 +112,11 @@
         /// Capabilities specific to the <c>textDocument/rename</c>
         /// </summary>
         public RegistrationCapabilities rename { get; set; }
+
+        /// <summary>
+        /// Capabilities specific to <c>textDocument/publishDiagnostics</c>.
+        /// </summary>
+        /// <seealso>Spec 3.7.0</seealso>
+        public PublishDiagnosticsCapabilities publishDiagnostics { get; set; }
     }
 }

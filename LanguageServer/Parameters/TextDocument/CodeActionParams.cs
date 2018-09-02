@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LanguageServer.Parameters.TextDocument
+﻿namespace LanguageServer.Parameters.TextDocument
 {
     /// <summary>
     /// For <c>textDocument/codeAction</c>
