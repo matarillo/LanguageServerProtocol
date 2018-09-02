@@ -37,5 +37,17 @@
         /// Capabilities specific to the <c>workspace/executeCommand</c> request.
         /// </summary>
         public RegistrationCapabilities executeCommand { get; set; }
+
+        /// <summary>
+        /// The client has support for workspace folders.
+        /// </summary>
+        /// <seealso>Spec 3.6.0</seealso>
+        public bool? workspaceFolders { get; set; }
+
+        /// <summary>
+        /// The client supports <c>workspace/configuration</c> requests.
+        /// </summary>
+        /// <seealso>Spec 3.6.0</seealso>
+        public bool? configuration { get; set; }
     }
 }

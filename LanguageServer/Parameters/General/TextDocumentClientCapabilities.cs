@@ -66,6 +66,20 @@
         public RegistrationCapabilities definition { get; set; }
 
         /// <summary>
+        /// Capabilities specific to the <c>textDocument/typeDefinition</c>
+        /// </summary>
+        /// <seealso cref="ProviderOptions"/>
+        /// <seealso>Spec 3.6.0</seealso>
+        public RegistrationCapabilities typeDefinition { get; set; }
+
+        /// <summary>
+        /// Capabilities specific to the <c>textDocument/implementation</c>.
+        /// </summary>
+        /// <seealso cref="ProviderOptions"/>
+        /// <seealso>Spec 3.6.0</seealso>
+        public RegistrationCapabilities implementation { get; set; }
+
+        /// <summary>
         /// Capabilities specific to the <c>textDocument/codeAction</c>
         /// </summary>
         public RegistrationCapabilities codeAction { get; set; }
@@ -79,6 +93,20 @@
         /// Capabilities specific to the <c>textDocument/documentLink</c>
         /// </summary>
         public RegistrationCapabilities documentLink { get; set; }
+
+        /// <summary>
+        /// Capabilities specific to the <c>textDocument/documentColor</c> and the
+        /// <c>textDocument/colorPresentation</c> request.
+        /// </summary>
+        /// <remarks>
+        /// <c>dynamicRegistration</c> property shows whether colorProvider supports dynamic registration.
+        /// If this is set to <c>true</c> the client supports the new
+        /// <c>(ColorProviderOptions &amp; TextDocumentRegistrationOptions &amp; StaticRegistrationOptions)</c>
+        /// return value for the corresponding server capability as well.
+        /// </remarks>
+        /// <seealso cref="ColorProviderOptions"/>
+        /// <seealso>Spec 3.6.0</seealso>
+        public RegistrationCapabilities colorProvider { get; set; }
 
         /// <summary>
         /// Capabilities specific to the <c>textDocument/rename</c>

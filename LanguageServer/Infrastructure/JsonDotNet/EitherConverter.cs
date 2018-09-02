@@ -25,6 +25,8 @@ namespace LanguageServer.Infrastructure.JsonDotNet
             table = new Dictionary<Type, Func<JToken, object>>();
             table[typeof(NumberOrString)] = token => (object)ToNumberOrString(token);
             table[typeof(LocationSingleOrArray)] = token => (object)ToLocationSingleOrArray(token);
+            table[typeof(ChangeNotificationsOptions)] = token => (object)ToChangeNotificationsOptions(token);
+            table[typeof(ProviderOptionsOrBoolean)] = token => (object)ToProviderOptionsOrBoolean(token);
             table[typeof(TextDocumentSync)] = token => (object)ToTextDocumentSync(token);
             table[typeof(Documentation)] = token => (object)ToDocumentation(token);
             table[typeof(CompletionResult)] = token => (object)ToCompletionResult(token);
@@ -84,6 +86,36 @@ namespace LanguageServer.Infrastructure.JsonDotNet
                     return new LocationSingleOrArray(token.ToObject<Location>());
                 case JTokenType.Array:
                     return new LocationSingleOrArray(token.ToObject<Location[]>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private ChangeNotificationsOptions ToChangeNotificationsOptions(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Boolean:
+                    return new ChangeNotificationsOptions(token.ToObject<bool>());
+                case JTokenType.String:
+                    return new ChangeNotificationsOptions(token.ToObject<string>());
+                default:
+                    throw new JsonSerializationException();
+            }
+        }
+
+        private ProviderOptionsOrBoolean ToProviderOptionsOrBoolean(JToken token)
+        {
+            switch (token.Type)
+            {
+                case JTokenType.Null:
+                    return null;
+                case JTokenType.Boolean:
+                    return new ProviderOptionsOrBoolean(token.ToObject<bool>());
+                case JTokenType.Object:
+                    return new ProviderOptionsOrBoolean(token.ToObject<ProviderOptions>());
                 default:
                     throw new JsonSerializationException();
             }

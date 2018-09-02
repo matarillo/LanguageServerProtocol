@@ -38,5 +38,49 @@ namespace LanguageServer.Client
                 (ResponseMessage<ApplyWorkspaceEditResponse, ResponseError> res) => tcs.TrySetResult(Message.ToResult(res)));
             return tcs.Task;
         }
+
+        /// <summary>
+        /// The <c>workspace/workspaceFolders</c> request is sent from the server to the client
+        /// to fetch the current open list of workspace folders. 
+        /// </summary>
+        /// <returns>
+        /// Returns <c>null</c> in the response if only a single file is open in the tool.
+        /// Returns an empty array if a workspace is open but no folders are configured.
+        /// </returns>
+        /// <seealso>Spec 3.6.0</seealso>
+        public Task<Result<WorkspaceFolder[], ResponseError>> WorkspaceFolders()
+        {
+            var tcs = new TaskCompletionSource<Result<WorkspaceFolder[], ResponseError>>();
+            _connection.SendRequest(
+                new VoidRequestMessage
+                {
+                    id = IdGenerator.Instance.Next(),
+                    method = "workspace/workspaceFolders"
+                },
+                (ResponseMessage<WorkspaceFolder[], ResponseError> res) => tcs.TrySetResult(Message.ToResult(res)));
+            return tcs.Task;
+        }
+
+        /// <summary>
+        /// The <c>workspace/configuration</c> request is sent from the server to the client
+        /// to fetch configuration settings from the client.
+        /// The request can fetch n configuration settings in one roundtrip. 
+        /// </summary>
+        /// <param name="params">configuration sections asked for</param>
+        /// <returns>configuration settings</returns>
+        /// <seealso>Spec 3.6.0</seealso>
+        public Task<Result<dynamic[], ResponseError>> Configuration(ConfigurationParams @params)
+        {
+            var tcs = new TaskCompletionSource<Result<dynamic[], ResponseError>>();
+            _connection.SendRequest(
+                new RequestMessage<ConfigurationParams>
+                {
+                    id = IdGenerator.Instance.Next(),
+                    method = "workspace/configuration",
+                    @params = @params
+                },
+                (ResponseMessage<dynamic[], ResponseError> res) => tcs.TrySetResult(Message.ToResult(res)));
+            return tcs.Task;
+        }
     }
 }

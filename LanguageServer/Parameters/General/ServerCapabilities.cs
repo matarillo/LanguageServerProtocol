@@ -42,6 +42,18 @@ namespace LanguageServer.Parameters.General
         public bool? definitionProvider { get; set; }
 
         /// <summary>
+        /// The server provides Goto Type Definition support.
+        /// </summary>
+        /// <seealso>Spec 3.6.0</seealso>
+        public ProviderOptionsOrBoolean typeDefinitionProvider { get; set; }
+
+        /// <summary>
+        /// The server provides Goto Implementation support.
+        /// </summary>
+        /// <seealso>Spec 3.6.0</seealso>
+        public ProviderOptionsOrBoolean implementationProvider { get; set; }
+
+        /// <summary>
         /// The server provides find references support.
         /// </summary>
         public bool? referencesProvider { get; set; }
@@ -106,9 +118,21 @@ namespace LanguageServer.Parameters.General
         public DocumentLinkOptions documentLinkProvider { get; set; }
 
         /// <summary>
+        /// The server provides color provider support.
+        /// </summary>
+        /// <seealso>Spec 3.6.0</seealso>
+        public ColorProviderOptions colorProvider { get; set; }
+
+        /// <summary>
         /// The server provides execute command support.
         /// </summary>
         public ExecuteCommandOptions executeCommandProvider { get; set; }
+
+        /// <summary>
+        /// Workspace specific server capabilities
+        /// </summary>
+        /// <seealso>Spec 3.6.0</seealso>
+        public WorkspaceOptions workspace { get; set; }
 
         /// <summary>
         /// Experimental server capabilities.

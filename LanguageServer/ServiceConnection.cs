@@ -57,6 +57,34 @@ namespace LanguageServer
 
         #region Workspace
 
+        /// <summary>
+        /// The <c>workspace/didChangeWorkspaceFolders</c> notification is sent from the client
+        /// to the server to inform the server about workspace folder configuration changes. 
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The notification is sent by default if both <i>ServerCapabilities/workspace/workspaceFolders</i>
+        /// and <i>ClientCapabilities/workspace/workspaceFolders</i> are true;
+        /// or if the server has registered to receive this notification it first.
+        /// </para>
+        /// <para>
+        /// To register for the <c>workspace/didChangeWorkspaceFolders</c>
+        /// send a <c>client/registerCapability</c> request from the client to the server.
+        /// The registration parameter must have a registrations item of the following form,
+        /// where <c>id</c> is a unique id used to unregister the capability (the example uses a UUID):
+        /// </para>
+        /// <code><![CDATA[{
+        ///     id: "28c6150c-bd7b-11e7-abc4-cec278b6b50a",
+        ///     method: "workspace/didChangeWorkspaceFolders"
+        /// }]]></code>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <seealso>Spec 3.6.0</seealso>
+        [JsonRpcMethod("workspace/didChangeWorkspaceFolders")]
+        protected virtual void DidChangeWorkspaceFolders(DidChangeWorkspaceFoldersParams @params)
+        {
+        }
+
         // dynamicRegistration?: boolean;
         [JsonRpcMethod("workspace/didChangeConfiguration")]
         protected virtual void DidChangeConfiguration(DidChangeConfigurationParams @params)
@@ -203,6 +231,47 @@ namespace LanguageServer
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The document color request is sent from the client to the server
+        /// to list all color references found in a given text document.
+        /// Along with the range, a color value in RGB is returned.
+        /// </summary>
+        /// <remarks>
+        /// Clients can use the result to decorate color references in an editor. For example:
+        /// <list type="bullet">
+        /// <item><description>Color boxes showing the actual color next to the reference</description></item>
+        /// <item><description>Show a color picker when a color reference is edited</description></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <returns></returns>
+        /// <seealso>Spec 3.6.0</seealso>
+        [JsonRpcMethod("textDocument/documentColor")]
+        protected virtual Result<ColorInformation[], ResponseError> DocumentColor(DocumentColorParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The color presentation request is sent from the client to the server
+        /// to obtain a list of presentations for a color value at a given location.
+        /// </summary>
+        /// <remarks>
+        /// Clients can use the result to
+        /// <list type="bullet">
+        /// <item><description>modify a color reference.</description></item>
+        /// <item><description>show in a color picker and let users pick one of the presentations</description></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <returns></returns>
+        /// <seealso>Spec 3.6.0</seealso>
+        [JsonRpcMethod("textDocument/colorPresentation")]
+        protected virtual Result<ColorPresentation[], ResponseError> ColorPresentation(ColorPresentationParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
         // dynamicRegistration?: boolean;
         // Registration Options: TextDocumentRegistrationOptions
         [JsonRpcMethod("textDocument/formatting")]
@@ -227,10 +296,52 @@ namespace LanguageServer
             throw new NotImplementedException();
         }
 
-        // dynamicRegistration?: boolean;
-        // Registration Options: TextDocumentRegistrationOptions
+        /// <summary>
+        /// The goto definition request is sent from the client to the server
+        /// to resolve the definition location of a symbol at a given text document position.
+        /// </summary>
+        /// <remarks>
+        /// Registration Options: <c>TextDocumentRegistrationOptions</c>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <returns></returns>
+        /// <seealso cref="LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
         [JsonRpcMethod("textDocument/definition")]
         protected virtual Result<LocationSingleOrArray, ResponseError> GotoDefinition(TextDocumentPositionParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The goto type definition request is sent from the client to the server
+        /// to resolve the type definition location of a symbol at a given text document position.
+        /// </summary>
+        /// <remarks>
+        /// Registration Options: <c>TextDocumentRegistrationOptions</c>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <returns></returns>
+        /// <seealso cref="LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+        /// <seealso>Spec 3.6.0</seealso>
+        [JsonRpcMethod("textDocument/typeDefinition")]
+        protected virtual Result<LocationSingleOrArray, ResponseError> GotoTypeDefinition(TextDocumentPositionParams @params)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The goto implementation request is sent from the client to the server
+        /// to resolve the implementation location of a symbol at a given text document position.
+        /// </summary>
+        /// <remarks>
+        /// Registration Options: <c>TextDocumentRegistrationOptions</c>
+        /// </remarks>
+        /// <param name="params"></param>
+        /// <returns></returns>
+        /// <seealso cref="LanguageServer.Parameters.General.TextDocumentClientCapabilities"/>
+        /// <seealso>Spec 3.6.0</seealso>
+        [JsonRpcMethod("textDocument/implementation")]
+        protected virtual Result<LocationSingleOrArray, ResponseError> GotoImplementation(TextDocumentPositionParams @params)
         {
             throw new NotImplementedException();
         }
