@@ -3,7 +3,7 @@
     /// <summary>
     /// For <c>initialize</c>
     /// </summary>
-    /// <seealso>Spec 3.7.2</seealso>
+    /// <seealso>Spec 3.9.0</seealso>
     public class CompletionItemCapabilities
     {
         /// <summary>
@@ -39,5 +39,11 @@
         /// </summary>
         /// <seealso>Spec 3.7.2</seealso>
         public bool? deprecatedSupport { get; set; }
+
+        /// <summary>
+        /// Client supports the preselect property on a completion item.
+        /// </summary>
+        /// <seealso>Spec 3.9.0</seealso>
+        public bool? preselectSupport { get; set; }
     }
 }
