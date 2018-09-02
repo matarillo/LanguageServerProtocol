@@ -7,7 +7,7 @@ namespace LanguageServer.Parameters.TextDocument
     /// <summary>
     /// For <c>textDocument/completion</c> and <c>completionItem/resolve</c>
     /// </summary>
-    /// <seealso>Spec 3.3.0</seealso>
+    /// <seealso>Spec 3.7.2</seealso>
     public class CompletionItem
     {
         /// <summary>
@@ -31,6 +31,12 @@ namespace LanguageServer.Parameters.TextDocument
         /// </summary>
         /// <seealso>Spec 3.3.0</seealso>
         public Documentation documentation { get; set; }
+
+        /// <summary>
+        /// Indicates if this item is deprecated.
+        /// </summary>
+        /// <seealso>Spec 3.7.2</seealso>
+        public bool? deprecated { get; set; }
 
         /// <summary>
         /// A string that should be used when comparing this item with other items.
