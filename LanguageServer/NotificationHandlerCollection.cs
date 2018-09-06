@@ -8,7 +8,7 @@ namespace LanguageServer
         private readonly Dictionary<string, NotificationHandler> dictionary = new Dictionary<string, NotificationHandler>();
         
         public void Set<TRequest>(string rpcMethod, Action<TRequest> handler)
-            where TRequest : RequestMessageBase
+            where TRequest : NotificationMessageBase
         {
             void Action(object request, Connection _) => handler((TRequest) request);
             var value = new NotificationHandler(rpcMethod, typeof(TRequest), Action);
@@ -16,7 +16,7 @@ namespace LanguageServer
         }
 
         public void Set<TRequest>(string rpcMethod, Action<TRequest, Connection> handler)
-            where TRequest : RequestMessageBase
+            where TRequest : NotificationMessageBase
         {
             void Action(object request, Connection connection) => handler((TRequest) request, connection);
             var value = new NotificationHandler(rpcMethod, typeof(TRequest), Action);
